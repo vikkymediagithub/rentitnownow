@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import { Search, Eye, EyeOff } from "lucide-react";
 
 export default function RegisterPage() {
   const [role, setRole] = useState('guest');
@@ -11,15 +12,18 @@ export default function RegisterPage() {
   return (
     <div className="bg-sky-50 min-h-screen">
       {/* Header */}
-      <header className="w-full bg-white">
-        <div className="mx-auto max-w-7xl px-2 flex justify-between py-6">
-          <div className="flex gap-1 items-center">
-            <p className="px-3 py-1 font-semibold bg-gradient-to-r from-[#F85259] to-[#3352A5] rounded-lg text-white">R</p>
-            <p className="font-semibold text-sm">Rentitnownow.com</p>
-          </div>
-
-          <div className="rounded-lg py-2 px-2 bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white flex gap-1">
-            <img src="/Vector.png" alt="" className="w-5 h-5" />
+      <header className="bg-white border-b">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+             <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center">
+                <img src="/public/favicon.png" alt="" />
+              </div>
+              <span className="text-xl font-bold text-gray-900">Rentitnownow.com</span>
+            </div>
+            <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-blue-600 text-white rounded flex items-center justify-center">
+              <Search className="h-4 w-4 text-white" />
+            </div>
           </div>
         </div>
       </header>
@@ -41,6 +45,7 @@ export default function RegisterPage() {
                 <img src="/public/stash_user-id-light.png" alt="" className="mx-auto" />
                 <h3 className="font-semibold">I am a Guest</h3>
                 <p className="font-light">Looking for a place to stay</p>
+                <span className='text-red-500 pt-2 font-semibold'>selected</span>
               </div>
               <div
                 className={`text-center py-6 px-8 bg-white rounded-lg cursor-pointer hover:shadow ${role === 'owner' ? 'shadow border border-blue-500' : ''}`}
