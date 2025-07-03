@@ -18,8 +18,8 @@ export default function RegisterPage() {
             <p className="font-semibold text-sm">Rentitnownow.com</p>
           </div>
 
-          <div className="rounded-lg py-2 px-2 bg-gradient-to-r from-[#F85259] to-[#3352A5] flex gap-1">
-            <img src="/img/Vector.png" alt="" className="w-5 h-5" />
+          <div className="rounded-lg py-2 px-2 bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white flex gap-1">
+            <img src="/Vector.png" alt="" className="w-5 h-5" />
           </div>
         </div>
       </header>
