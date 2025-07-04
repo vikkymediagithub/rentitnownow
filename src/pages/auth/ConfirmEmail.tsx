@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -33,69 +32,50 @@ const ConfirmEmail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center space-x-2 text-2xl font-bold text-gray-900">
-            <Home className="h-8 w-8 text-blue-600" />
-            <span>RentItNowNow</span>
-          </Link>
+    <div className=" bg-sky-50 flex flex-col items-center min-h-screen">
+       {/* Header */}
+      <header className="w-full bg-white">
+        <div className="mx-auto max-w-7xl px-2 flex justify-between py-4">
+          <div className="flex gap-1 items-center">
+            <p className="px-3 py-1 font-semibold bg-gradient-to-r from-[#F85259] to-[#3352A5] rounded-lg text-white">R</p>
+            <p className="font-semibold text-sm">Rentitnownow.com</p>
+          </div>
+
+          <div className="rounded-lg py-2 px-2 bg-gradient-to-r from-[#F85259] to-[#3352A5] flex gap-1">
+            <img src="/public/Vector.png" alt="" className="" />
+          </div>
         </div>
+      </header>
 
-        <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center">
-            <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-              <Mail className="h-8 w-8 text-blue-600" />
-            </div>
-            <CardTitle className="text-2xl font-bold">Confirm Your Email</CardTitle>
-            <CardDescription>
-              We've sent a confirmation link to your email address. 
-              Please click the link to activate your account.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-              <p className="text-sm text-yellow-800">
-                <strong>Check your spam folder</strong> if you don't see the email in your inbox.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <p className="text-sm text-gray-600 text-center">
-                Didn't receive the email?
-              </p>
-              <Button
-                onClick={handleResendEmail}
-                variant="outline"
-                className="w-full"
-                disabled={isResending}
-              >
-                {isResending ? "Sending..." : "Resend Confirmation Email"}
-              </Button>
-            </div>
-
-            {/* Demo button for testing */}
-            <div className="border-t pt-4">
-              <p className="text-xs text-gray-500 text-center mb-2">Demo: Click to simulate email confirmation</p>
-              <Button
-                onClick={simulateEmailConfirmed}
-                className="w-full bg-green-600 hover:bg-green-700"
-              >
-                <CheckCircle className="h-4 w-4 mr-2" />
-                Simulate Email Confirmed
-              </Button>
-            </div>
-
-            <div className="text-center pt-4">
-              <Link to="/login" className="text-sm text-blue-600 hover:text-blue-800 hover:underline">
-                Back to Sign In
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="w-full max-w-3xl bg-white mt-20">
+        <div className="w-full max-w-md grid grid-cols-1 mx-auto text-gray-700 my-20">
+          <div className="text-center mb-12">
+              <h3 className="font-medium text-xl mt-10">Check Your Email Inbox</h3>
+              <p>A password recovery link has been sent to your email inbox.</p>
+          </div>
+          <div className="flex justify-evenly text-sm my-6">
+             <div className="flex justify-between p-2 shadow-md gap-2">
+              <img src="/public/gmail.png" alt="" />
+              <p>Open Email</p>
+             </div>
+             <div className="flex justify-between p-2 shadow-md gap-2">
+              <img src="/public/yahoo.png" alt="" />
+              <p>Open Yahoo</p>
+             </div>
+             <div className="flex justify-between p-2 shadow-md gap-2">
+              <img src="/public/outlook.png" alt="" />
+              <p>Open Outlook</p>
+             </div>
+          </div>
+          <div className="text-center my-10">
+            <p>Didn't receive any email? <span className="text-blue-500 hover:underline">Resend in 59 seconds</span></p>
+          </div>
+        </div>
       </div>
+
     </div>
   );
 };
 
-export default ConfirmEmail;
+// eslint-disable-next-line no-irregular-whitespace
+export default ConfirmEmail;

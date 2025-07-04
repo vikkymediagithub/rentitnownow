@@ -1,11 +1,16 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Home, ArrowLeft, Mail } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Home, ArrowLeft, Mail, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const ForgotPassword = () => {
@@ -18,7 +23,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
+    // Simulated API call
     setTimeout(() => {
       setIsLoading(false);
       setIsSubmitted(true);
@@ -34,7 +39,10 @@ const ForgotPassword = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <Link to="/" className="inline-flex items-center space-x-2 text-2xl font-bold text-gray-900">
+            <Link
+              to="/"
+              className="inline-flex items-center space-x-2 text-2xl font-bold text-gray-900"
+            >
               <Home className="h-8 w-8 text-blue-600" />
               <span>RentItNowNow</span>
             </Link>
@@ -47,7 +55,7 @@ const ForgotPassword = () => {
               </div>
               <CardTitle className="text-2xl font-bold">Check Your Email</CardTitle>
               <CardDescription>
-                We've sent password reset instructions to {email}
+                We've sent password reset instructions to <strong>{email}</strong>
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -60,7 +68,7 @@ const ForgotPassword = () => {
                   try again
                 </button>
               </p>
-              
+
               <Link to="/login">
                 <Button className="w-full" variant="outline">
                   <ArrowLeft className="h-4 w-4 mr-2" />
@@ -75,68 +83,64 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
+    <div className="bg-sky-50 flex flex-col items-center min-h-screen">
       {/* Header */}
-      <header className="w-full bg-white">
-        <div className="mx-auto max-w-7xl px-2 flex justify-between py-6">
-          <div className="flex gap-1 items-center">
-            <p className="px-3 py-1 font-semibold bg-gradient-to-r from-[#F85259] to-[#3352A5] rounded-lg text-white">R</p>
-            <p className="font-semibold text-sm">Rentitnownow.com</p>
+      <header className="w-full bg-white border-b">
+        <div className="mx-auto max-w-7xl px-4 flex justify-between items-center h-16">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 rounded flex items-center justify-center">
+              <img src="/favicon.png" alt="logo" className="w-6 h-6" />
+            </div>
+            <span className="text-xl font-bold text-gray-900">Rentitnownow.com</span>
           </div>
-
-          <div className="rounded-lg py-2 px-2 bg-gradient-to-r from-[#F85259] to-[#3352A5] flex gap-1">
-            <img src="/img/Vector.png" alt="" className="w-5 h-5" />
+          <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-blue-600 text-white rounded flex items-center justify-center">
+            <Search className="h-4 w-4 text-white" />
           </div>
         </div>
       </header>
 
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center space-x-2 text-2xl font-bold text-gray-900">
-            <Home className="h-8 w-8 text-blue-600" />
-            <span>RentItNowNow</span>
-          </Link>
-        </div>
+      {/* Form Section */}
+      <div className="w-full max-w-3xl bg-white mt-20 py-10 px-6 sm:px-8 shadow rounded-md">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-md mx-auto grid gap-6 text-gray-700"
+        >
+          <div className="text-center">
+            <h1 className="font-bold text-2xl mb-2">Reset Your Password</h1>
+            <p className="text-sm">Enter your email to reset your password</p>
+          </div>
 
-        <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">Reset Your Password</CardTitle>
-            <CardDescription>
-              Enter your email address and we'll send you a link to reset your password
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="h-11"
-                />
-              </div>
+          <div className="space-y-2">
+            <Label htmlFor="email" className="font-medium">
+              Email address
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="email@sample.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-              <Button
-                type="submit"
-                className="w-full h-11 bg-blue-600 hover:bg-blue-700"
-                disabled={isLoading}
-              >
-                {isLoading ? "Sending..." : "Send Reset Link"}
-              </Button>
-            </form>
+          <Button
+            type="submit"
+            className="w-full bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white"
+            disabled={isLoading}
+          >
+            {isLoading ? "Sending..." : "Submit"}
+          </Button>
 
-            <div className="mt-6 text-center">
-              <Link to="/login" className="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 hover:underline">
-                <ArrowLeft className="h-4 w-4 mr-1" />
-                Back to Sign In
+          <div className="text-center text-sm mt-6">
+            <p>
+              Remember password?{" "}
+              <Link to="/login" className="text-blue-500 hover:underline">
+                Sign in
               </Link>
-            </div>
-          </CardContent>
-        </Card>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   );
