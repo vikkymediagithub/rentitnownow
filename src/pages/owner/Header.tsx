@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, onNavigate }) => {
           <div className="hidden sm:flex items-center">
             <img
               className="h-12 w-12 rounded-full object-cover border-2 border-gray-200"
-              src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
+              src="/public/profile.png"
               alt="User profile"
             />
             <div className="ml-4">
@@ -66,120 +66,130 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, onNavigate }) => {
           </div>
         </div>
 
-        {/* Center - Search */}
-        <div className="flex-1 flex justify-center px-4 lg:ml-8 max-w-2xl">
+       {/* Center - Search */}
+       <div className="flex-1 flex justify-center px-4 lg:ml-8 max-w-2xl">
           <div className="w-full lg:max-w-lg relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-6 w-6 text-gray-400" />
+            {/* Search Icon */}
+            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <defs>
+                  <linearGradient
+                    id="searchGradientUnique"
+                    x1="0"
+                    y1="0"
+                    x2="24"
+                    y2="24"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#ec4899" /> {/* pink-500 */}
+                    <stop offset="1" stopColor="#6366f1" /> {/* indigo-500 */}
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
+                  stroke="url(#searchGradientUnique)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
+
+            {/* Input Field */}
             <input
-              className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl bg-white placeholder-gray-500 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Search properties, bookings, or anything..."
               type="search"
+              placeholder="Search anything..."
+              className="w-full pl-14 pr-4 py-4 border border-gray-300 rounded-3xl bg-[#f0f0f0] placeholder:text-[#c9c9c9] text-base shadow-sm focus:outline-none"
             />
           </div>
-        </div>
+       </div>
 
-        {/* Right - Icons */}
-        <div className="ml-6 flex items-center space-x-4">
-          {/* Notification Icon */}
-          <div className="relative" ref={notificationRef}>
-            <button
-              onClick={() => setNotificationOpen(!isNotificationOpen)}
-              className="relative bg-white p-3 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 transition"
-              aria-label="Notifications"
-            >
-              <Bell className="h-6 w-6" />
-              {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-bold text-white">{unreadCount}</span>
-                </span>
-              )}
-            </button>
+       {/* Notification Icon */}
+      <div className="relative" ref={notificationRef}>
+        <button
+          onClick={() => setNotificationOpen(!isNotificationOpen)}
+          className="relative bg-[#F2F2F2] p-2.5 rounded-full hover:bg-gray-200 transition"
+          aria-label="Notifications"
+        >
+          {/* Gradient Bell Icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="url(#gradient)"
+            strokeWidth={2}
+          >
+            <defs>
+              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#FF4D4D" />
+                <stop offset="100%" stopColor="#4D5DFF" />
+              </linearGradient>
+            </defs>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0a3.001 3.001 0 01-6 0m6 0H9"
+            />
+          </svg>
 
-            {/* Notifications Dropdown */}
-            {isNotificationOpen && (
-              <div className="absolute right-0 mt-2 w-96 bg-white rounded-xl shadow-xl border border-gray-200 py-2 z-50">
-                <div className="px-6 py-4 border-b border-gray-100">
-                  <h3 className="text-lg font-bold text-gray-900">Notifications</h3>
-                </div>
-                <div className="max-h-96 overflow-y-auto">
-                  {notifications.map(notification => (
+          {/* Notification Count Badge */}
+          {unreadCount > 0 && (
+            <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-[10px] font-semibold flex items-center justify-center rounded-full shadow-sm">
+              {unreadCount}
+            </span>
+          )}
+        </button>
+
+        {/* Notifications Dropdown */}
+        {isNotificationOpen && (
+          <div className="absolute right-0 mt-2 w-96 bg-white rounded-xl shadow-xl border border-gray-200 py-2 z-50">
+            <div className="px-6 py-4 border-b border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900">Notifications</h3>
+            </div>
+            <div className="max-h-96 overflow-y-auto">
+              {notifications.map((notification) => (
+                <div
+                  key={notification.id}
+                  className={`px-6 py-4 hover:bg-gray-50 cursor-pointer ${
+                    notification.unread ? 'bg-blue-50' : ''
+                  }`}
+                >
+                  <div className="flex items-start">
                     <div
-                      key={notification.id}
-                      className={`px-6 py-4 hover:bg-gray-50 cursor-pointer ${notification.unread ? 'bg-blue-50' : ''}`}
-                    >
-                      <div className="flex items-start">
-                        <div className={`w-3 h-3 rounded-full mt-2 mr-3 ${notification.unread ? 'bg-blue-500' : 'bg-gray-300'}`} />
-                        <div className="flex-1">
-                          <p className="text-base font-medium text-gray-900">{notification.title}</p>
-                          <p className="text-sm text-gray-600 mt-1">{notification.message}</p>
-                          <p className="text-xs text-gray-500 mt-2">{notification.time}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="px-6 py-3 border-t border-gray-100">
-                  <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                    View all notifications
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Profile Icon */}
-          <div className="relative" ref={profileRef}>
-            <button
-              onClick={() => setProfileOpen(!isProfileOpen)}
-              className="flex items-center p-2 rounded-lg hover:bg-gray-100 transition"
-              aria-label="User Profile"
-            >
-              <img
-                className="h-10 w-10 rounded-full object-cover border-2 border-gray-200"
-                src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Profile"
-              />
-            </button>
-
-            {isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 py-2 z-50">
-                <div className="px-6 py-4 border-b border-gray-100">
-                  <div className="flex items-center">
-                    <img
-                      className="h-12 w-12 rounded-full object-cover border-2 border-gray-200"
-                      src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
-                      alt="Profile"
+                      className={`w-3 h-3 rounded-full mt-2 mr-3 ${
+                        notification.unread ? 'bg-blue-500' : 'bg-gray-300'
+                      }`}
                     />
-                    <div className="ml-3">
-                      <p className="text-base font-bold text-gray-900">Osas</p>
-                      <p className="text-sm text-gray-600">Property Manager</p>
+                    <div className="flex-1">
+                      <p className="text-base font-medium text-gray-900">
+                        {notification.title}
+                      </p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {notification.message}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">{notification.time}</p>
                     </div>
                   </div>
                 </div>
-                <div className="py-2">
-                  <button
-                    onClick={() => {
-                      onNavigate('profile');
-                      setProfileOpen(false);
-                    }}
-                    className="w-full px-6 py-3 text-left text-base text-gray-700 hover:bg-gray-50 flex items-center"
-                  >
-                    <User className="w-5 h-5 mr-3" />
-                    View Profile
-                  </button>
-                  <button className="w-full px-6 py-3 text-left text-base text-gray-700 hover:bg-gray-50">
-                    Account Settings
-                  </button>
-                  <button className="w-full px-6 py-3 text-left text-base text-red-600 hover:bg-red-50">
-                    Sign Out
-                  </button>
-                </div>
-              </div>
-            )}
+              ))}
+            </div>
+            <div className="px-6 py-3 border-t border-gray-100">
+              <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                View all notifications
+              </button>
+            </div>
           </div>
-        </div>
+        )}
+      </div>
+
       </div>
     </header>
   );
