@@ -261,7 +261,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center">
+                <div className="w-8 h-8 rounded flex items-center justify-center">
                   <img src="/public/favicon.png" alt="" />
                 </div>
                 <span className="text-xl font-bold">Rentitnownow.com</span>
