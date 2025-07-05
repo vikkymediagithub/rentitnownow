@@ -63,7 +63,7 @@ const ConfirmEmail = () => {
             href="https://mail.google.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 shadow-sm border rounded-md hover:bg-gray-50"
+            className="flex items-center gap-2 px-4 py-2 shadow-sm rounded-md hover:bg-gray-50"
           >
             <img src="/gmail.png" alt="Gmail" className="w-5 h-5" />
             Open Gmail
@@ -72,7 +72,7 @@ const ConfirmEmail = () => {
             href="https://mail.yahoo.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 shadow-sm border rounded-md hover:bg-gray-50"
+            className="flex items-center gap-2 px-4 py-2 shadow-sm rounded-md hover:bg-gray-50"
           >
             <img src="/yahoo.png" alt="Yahoo" className="w-5 h-5" />
             Open Yahoo Mail
@@ -81,7 +81,7 @@ const ConfirmEmail = () => {
             href="https://outlook.live.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 shadow-sm border rounded-md hover:bg-gray-50"
+            className="flex items-center gap-2 px-4 py-2 shadow-sm rounded-md hover:bg-gray-50"
           >
             <img src="/outlook.png" alt="Outlook" className="w-5 h-5" />
             Open Outlook
