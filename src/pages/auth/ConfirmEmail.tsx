@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { Search } from "lucide-react"; // Assuming you use lucide-react for icons
+import { Search } from "lucide-react";
+import gmail from "../../assets/gmail.png";
+import yahooImage from "../../assets/yahoo.png";
+import outLook from "../../assets/outlook.png";
 
 const ConfirmEmail = () => {
   const [seconds, setSeconds] = useState(59);
@@ -65,7 +68,7 @@ const ConfirmEmail = () => {
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2 shadow-sm rounded-md hover:bg-gray-50"
           >
-            <img src="/gmail.png" alt="Gmail" className="w-5 h-5" />
+            <img src={gmail} alt="Gmail" className="w-5 h-5" />
             Open Gmail
           </a>
           <a
@@ -74,7 +77,7 @@ const ConfirmEmail = () => {
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2 shadow-sm rounded-md hover:bg-gray-50"
           >
-            <img src="/yahoo.png" alt="Yahoo" className="w-5 h-5" />
+            <img src={yahooImage} alt="Yahoo" className="w-5 h-5" />
             Open Yahoo Mail
           </a>
           <a
@@ -83,7 +86,7 @@ const ConfirmEmail = () => {
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2 shadow-sm rounded-md hover:bg-gray-50"
           >
-            <img src="/outlook.png" alt="Outlook" className="w-5 h-5" />
+            <img src={outLook} alt="Outlook" className="w-5 h-5" />
             Open Outlook
           </a>
         </div>
