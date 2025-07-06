@@ -10,6 +10,11 @@ import {
   Calendar,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import currencyImage from '../../assets/currency.png';
+import calenderImage from '../../assets/calender.png';
+import rateImage from '../../assets/rate.png';
+import roomImageOne from '../../assets/room-1.png';
+import roomImageTwo from '../../assets/room-2.png';
 
 function OwnerDashboard() {
   return (
@@ -19,9 +24,9 @@ function OwnerDashboard() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <StatCard icon="/currency.png" title="Total Properties" value="250,000" />
-            <StatCard icon="/calender.png" title="Total Bookings" value="25" />
-            <StatCard icon="/rate.png" title="Average Rating" value="4.45" />
+            <StatCard icon={currencyImage} title="Total Properties" value="250,000" />
+            <StatCard icon={calenderImage} title="Total Bookings" value="25" />
+            <StatCard icon={rateImage} title="Average Rating" value="4.45" />
           </div>
 
           {/* My Properties */}
@@ -133,9 +138,7 @@ const StatCard = ({
 
 const PropertyCard = ({ id }: { id: number }) => {
   const isFirst = id === 1;
-  const image = isFirst
-    ? 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400'
-    : 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400';
+  const image = isFirst ? roomImageOne : roomImageTwo;
   const title = isFirst
     ? 'Luxury Apartment In Victoria Island'
     : 'Modern Shortlet in Wuse 2';
@@ -210,5 +213,6 @@ const PropertyCard = ({ id }: { id: number }) => {
     </div>
   );
 };
+
 
 export default OwnerDashboard;
