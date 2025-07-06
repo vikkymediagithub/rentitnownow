@@ -38,11 +38,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, currentPage, onNavig
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between h-20 px-6 border-b border-gray-200">
-            <div className="flex items-center">
-              <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-blue-600 text-white rounded-xl flex items-center justify-center shadow-lg">
-                <img src="/public/favicon.png" alt="" />
-              </div>
-              <span className="ml-3 text-lg font-bold text-gray-900">Rentitnownow.com</span>
+            <div className="flex items-center space-x-2">
+              <div className="bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white rounded-md px-3 py-1 font-bold">
+              R
+            </div>  
+              <p className="font-semibold text-sm">Rentitnownow.com</p>
             </div>
             <button
               onClick={onClose}

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Bell, Menu, User } from 'lucide-react';
+import profileImage from '../../assets/profile.png';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -56,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, onNavigate }) => {
           <div className="hidden sm:flex items-center">
             <img
               className="h-12 w-12 rounded-full object-cover border-2 border-gray-200"
-              src="/public/profile.png"
+              src={profileImage}
               alt="User profile"
             />
             <div className="ml-4">
