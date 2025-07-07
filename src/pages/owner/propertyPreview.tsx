@@ -38,7 +38,7 @@ const PropertyPreview: React.FC = () => {
 
   const handleSubmitForReview = () => {
     // Navigate to congratulations page
-    navigate('/congratulations');
+    navigate('/owner/congratulations');
   };
 
   const handleSaveForLater = () => {
@@ -48,13 +48,13 @@ const PropertyPreview: React.FC = () => {
   };
 
   return (
-    <main className="flex-1 relative overflow-y-auto focus:outline-none bg-gray-50">
+    <main className="flex-1 relative overflow-y-auto focus:outline-none">
       <div className="min-h-screen py-6">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12">
           {/* Header */}
           <div className="flex items-center mb-6">
             <Link 
-              to="/add-property"
+              to="/owner/add-property"
               className="mr-3 p-1 rounded text-gray-400 hover:text-gray-600 transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -65,7 +65,7 @@ const PropertyPreview: React.FC = () => {
           </div>
 
           {/* Property Images */}
-          <div className="mb-6">
+          <div className="mb-6 bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12">
             {formData.propertyPhotos.length > 0 ? (
               <div className="grid grid-cols-4 gap-3">
                 {formData.propertyPhotos.slice(0, 4).map((photo: File, index: number) => (
@@ -90,8 +90,8 @@ const PropertyPreview: React.FC = () => {
 
           {/* Featured Badge */}
           <div className="mb-4">
-            <span className="inline-block bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded">
-              FEATURED
+            <span className="inline-block bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded-lg">
+              Apartment
             </span>
           </div>
 

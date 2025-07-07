@@ -198,7 +198,7 @@ const AddProperty: React.FC = () => {
       isValid = validateStep4();
       if (isValid) {
         // Navigate to preview page with form data
-        navigate('/add-property/preview', { state: { formData } });
+        navigate('/owner/property-preview', { state: { formData } });
         return;
       }
     }
@@ -211,7 +211,7 @@ const AddProperty: React.FC = () => {
   const handlePrevious = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
-      setErrors({}); // Clear errors when going back
+      setErrors({});
     }
   };
 
@@ -279,7 +279,7 @@ const AddProperty: React.FC = () => {
           </div>
 
           {/* Progress Steps with Animated Lines */}
-          <div className="mb-12">
+          <div className="mb-12 bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12">
             <div className="flex items-center justify-between max-w-2xl mx-auto">
               {steps.map((step, index) => (
                 <div key={step.number} className="flex items-center flex-1">

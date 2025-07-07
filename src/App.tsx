@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 // Public pages
 import Index from "./pages/Index";
 import Login from "./pages/auth/Login";
@@ -19,50 +18,53 @@ import AllProperties from "./pages/owner/AllProperties";
 import AddProperty from "./pages/owner/AddProperty";
 import EditProperty from "./pages/owner/EditProperty";
 import ViewProperty from "./pages/owner/ViewProperty";
-import PreviewProperty from "./pages/owner/PreviewProperty";
+import PropertyPreview from "./pages/owner/propertyPreview";
 import Congratulations from "./pages/owner/Congratulations";
 import Profile from "./pages/owner/Profile";
 
 // Layout
 import OwnerLayout from "./pages/owner/OwnerLayout";
 
-// Fix: Add GuestDashboard if you plan to use it
+// For Guest: GuestDashboard
 // import GuestDashboard from "./pages/guest/GuestDashboard";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <ShadcnToaster />
-      <SonnerToaster />
-      <BrowserRouter>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/confirm-email" element={<ConfirmEmail />} />
-          {/* Uncomment if GuestDashboard exists */}
-          {/* <Route path="/guest-dashboard" element={<GuestDashboard />} /> */}
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <ShadcnToaster />
+        <SonnerToaster />
+        <BrowserRouter>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/confirm-email" element={<ConfirmEmail />} />
 
-          {/* Owner routes */}
-          <Route path="/owner" element={<OwnerLayout />}>
-            <Route path="dashboard" element={<OwnerDashboard />} />
-            <Route path="bookings" element={<AllBookings />} />
-            <Route path="properties" element={<AllProperties />} />
-            <Route path="add-property" element={<AddProperty />} />
-            <Route path="edit-property/:id" element={<EditProperty />} />
-            <Route path="view-property/:id" element={<ViewProperty />} />
-            <Route path="preview-property" element={<PreviewProperty />} />
-            <Route path="congratulations" element={<Congratulations />} />
-            <Route path="profile" element={<Profile />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+            {/* Optional Guest route */}
+            {/* <Route path="/guest-dashboard" element={<GuestDashboard />} /> */}
+
+            {/* Owner routes nested inside OwnerLayout */}
+            <Route path="/owner" element={<OwnerLayout />}>
+              <Route path="dashboard" element={<OwnerDashboard />} />
+              <Route path="bookings" element={<AllBookings />} />
+              <Route path="properties" element={<AllProperties />} />
+              <Route path="add-property" element={<AddProperty />} />
+              <Route path="edit-property/:id" element={<EditProperty />} />
+              <Route path="view-property/:id" element={<ViewProperty />} />
+              <Route path="property-preview" element={<PropertyPreview />} />
+              <Route path="congratulations" element={<Congratulations />} />
+              <Route path="profile" element={<Profile />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
