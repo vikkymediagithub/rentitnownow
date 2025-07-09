@@ -1,10 +1,40 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, MapPin, Star, Users, Bed, Bath, Wifi, Car, Shield, Award, TrendingUp, CheckCircle, Menu, X } from 'lucide-react';
+import { Search, MapPin, Star, Users, Bed, Bath, Shield, Award, TrendingUp, CheckCircle, Menu, X, ChevronDown, Filter } from 'lucide-react';
 import propertyImage from '../assets/pics.png'
+import currencyImage from '../assets/currency.png';
+import guestImage from '../assets/guest.png';
+import businessImage from '../assets/business.png'; 
 
-const Landing: React.FC = () => {
+export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [showAllLocations, setShowAllLocations] = useState(true);
+
+  const locations = [
+    'Lagos, Nigeria',
+    'Ibadan, Nigeria', 
+    'Osogbo, Nigeria',
+    'Abuja, Nigeria',
+    'Port Harcourt, Nigeria',
+    'Kano, Nigeria',
+    'Kaduna, Nigeria'
+  ];
+
+   const filteredLocations = showAllLocations ? locations : locations.filter(loc => 
+    loc.toLowerCase().includes(selectedLocation.toLowerCase())
+  );
+
+  const handleLocationSelect = (location: string) => {
+    setSelectedLocation(location);
+    setIsLocationDropdownOpen(false);
+  };
+
+  const handleAllFilter = () => {
+    setShowAllLocations(!showAllLocations);
+    setSelectedLocation('');
+  };
 
   const featuredProperties = [
     {
@@ -14,9 +44,9 @@ const Landing: React.FC = () => {
       price: "NGN50,000",
       rating: 4.5,
       image: propertyImage,
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2
+      guests: "Wifi",
+      bedrooms: "Pool",
+      bathrooms: "Gym"
     },
     {
       id: 2,
@@ -25,9 +55,9 @@ const Landing: React.FC = () => {
       price: "NGN75,000",
       rating: 4.8,
       image: propertyImage,
-      guests: 6,
-      bedrooms: 3,
-      bathrooms: 3
+      guests: "Wifi",
+      bedrooms: "Pool",
+      bathrooms: "Gym"
     },
     {
       id: 3,
@@ -36,9 +66,9 @@ const Landing: React.FC = () => {
       price: "NGN25,000",
       rating: 4.2,
       image: propertyImage,
-      guests: 2,
-      bedrooms: 1,
-      bathrooms: 1
+      guests: "Wifi",
+      bedrooms: "Pool",
+      bathrooms: "Gym"
     },
     {
       id: 4,
@@ -47,9 +77,9 @@ const Landing: React.FC = () => {
       price: "NGN120,000",
       rating: 4.9,
       image: propertyImage,
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2
+      guests: "Wifi",
+      bedrooms: "Pool",
+      bathrooms: "Gym"
     },
     {
       id: 5,
@@ -58,9 +88,9 @@ const Landing: React.FC = () => {
       price: "NGN200,000",
       rating: 4.7,
       image: propertyImage,
-      guests: 8,
-      bedrooms: 4,
-      bathrooms: 4
+       guests: "Wifi",
+      bedrooms: "Pool",
+      bathrooms: "Gym"
     },
     {
       id: 6,
@@ -69,9 +99,9 @@ const Landing: React.FC = () => {
       price: "NGN300,000",
       rating: 4.6,
       image: propertyImage,
-      guests: 6,
-      bedrooms: 3,
-      bathrooms: 3
+       guests: "Wifi",
+      bedrooms: "Pool",
+      bathrooms: "Gym"
     },
     {
       id: 7,
@@ -80,9 +110,9 @@ const Landing: React.FC = () => {
       price: "NGN45,000",
       rating: 4.3,
       image: propertyImage,
-      guests: 3,
-      bedrooms: 2,
-      bathrooms: 1
+       guests: "Wifi",
+      bedrooms: "Pool",
+      bathrooms: "Gym"
     },
     {
       id: 8,
@@ -91,14 +121,15 @@ const Landing: React.FC = () => {
       price: "NGN180,000",
       rating: 4.8,
       image: propertyImage,
-      guests: 5,
-      bedrooms: 3,
-      bathrooms: 2
+       guests: "Wifi",
+      bedrooms: "Pool",
+      bathrooms: "Gym"
     }
   ];
 
   return (
-    <div className="fixed top-0 w-full min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
+      {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -153,53 +184,89 @@ const Landing: React.FC = () => {
       </div>
     </header>
 
+
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-red-500 to-purple-600 text-white py-20">
+       <section className="relative bg-gradient-to-r from-red-500 to-purple-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl md:text-6xl font-bold mb-6">
               Find Your Perfect Stay in Nigeria
             </h1>
             <p className="text-xl md:text-2xl mb-12 text-red-100">
-              Discover amazing places to stay from local hosts in cities across Nigeria
+              Discover amazing properties for short-term rentals across Lagos, Abuja, and beyond
             </p>
 
-            {/* Search Form */}
-            <div className="max-w-4xl mx-auto bg-white rounded-2xl p-6 shadow-2xl">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="md:col-span-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                  <input
-                    type="text"
-                    placeholder="Where are you going?"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  text-gray-900"
-                  />
+            {/* Search Dropdown */}
+            <div className="max-w-2xl mx-auto relative">
+              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                <div className="p-8">
+                  
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-1 relative">
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={selectedLocation}
+                          onChange={(e) => setSelectedLocation(e.target.value)}
+                          onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
+                          placeholder="Where?"
+                          className="w-full pl-4 pr-20 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 text-gray-900 text-lg"
+                        />
+                        
+                        {/* All button inside input */}
+                        <button 
+                          onClick={handleAllFilter}
+                          className={`absolute right-12 top-1/2 transform -translate-y-1/2 px-3 py-1 text-sm rounded-full border transition-colors flex items-center ${
+                            showAllLocations 
+                              ? 'bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-xl' 
+                              : 'bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-xl'
+                          }`}
+                        >
+                          <Filter className="w-3 h-3 mr-1" />
+                          All
+                        </button>
+                        
+                        <ChevronDown 
+                          className={`absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 transition-transform ${
+                            isLocationDropdownOpen ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </div>
+                    </div>
+                    
+                    <button className="px-8 py-4 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-xl flex items-center hover:from-red-600 hover:to-purple-700 transition-all shadow-lg text-lg font-medium">
+                      <Search className="w-5 h-5 mr-2" />
+                      Search
+                    </button>
+                  </div>
                 </div>
-                <div className="md:col-span-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Check-in</label>
-                  <input
-                    type="date"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 text-gray-900"
-                  />
-                </div>
-                <div className="md:col-span-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Check-out</label>
-                  <input
-                    type="date"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  text-gray-900"
-                  />
-                </div>
-                <div className="md:col-span-1 flex items-end">
-                  <button className="w-full bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center">
-                    <Search className="w-5 h-5 mr-2" />
-                    Search
-                  </button>
-                </div>
+                
+                {isLocationDropdownOpen && (
+                  <div className="border-t border-gray-100 py-2 max-h-64 overflow-y-auto">
+                    {filteredLocations.length > 0 ? (
+                      filteredLocations.map((location, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleLocationSelect(location)}
+                          className="w-full px-8 py-4 text-left hover:bg-gray-50 text-gray-700 text-lg transition-colors border-l-4 border-transparent hover:border-red-500"
+                        >
+                          <MapPin className="w-5 h-5 inline mr-3 text-gray-400" />
+                          {location}
+                        </button>
+                      ))
+                    ) : (
+                      <div className="px-8 py-4 text-gray-500 text-lg">
+                        No locations found
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Stats Section */}
       <section className="py-16 bg-gray-50">
@@ -229,51 +296,67 @@ const Landing: React.FC = () => {
             <p className="text-xl text-gray-600">Handpicked accommodations for your perfect stay</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredProperties.map((property) => (
-              <div key={property.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div className="relative">
-                  <img 
-                    className="w-full h-48 object-cover" 
-                    src={property.image} 
-                    alt={property.title} 
-                  />
-                  <div className="absolute top-4 right-4">
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{property.title}</h3>
-                  <div className="flex items-center text-gray-600 mb-3">
-                    <MapPin className="w-4 h-4 mr-1" />
-                    <span className="text-sm">{property.location}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
-                    <div className="flex items-center">
-                      <Users className="w-4 h-4 mr-1" />
-                      <span>{property.guests}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Bed className="w-4 h-4 mr-1" />
-                      <span>{property.bedrooms}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Bath className="w-4 h-4 mr-1" />
-                      <span>{property.bathrooms}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-xl font-bold text-gray-900">{property.price}</span>
-                      <span className="text-gray-600 text-sm ml-1">/ night</span>
-                    </div>
-                    <button className="bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                      Book Now
-                    </button>
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredProperties.map((property) => (
+          <div
+            key={property.id}
+            className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full"
+          >
+            <div className="relative">
+              <img
+                className="w-full h-60 object-cover"
+                src={property.image}
+                alt={property.title}
+              />
+              <div className="absolute top-4 right-4"></div>
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                {property.title}
+              </h3>
+              <div className="flex items-center text-gray-600 mb-3">
+                <MapPin className="w-4 h-4 mr-1" />
+                <span className="text-sm">{property.location}</span>
               </div>
-            ))}
+              <div className="flex items-center justify-start gap-4 text-sm text-gray-600 mb-6">
+              <div className="flex items-center gap-1 bg-blue-100 px-4 py-2 rounded-lg">
+                <Users className="w-4 h-4" />
+                <span>{property.guests}</span>
+              </div>
+              <div className="flex items-center gap-1 bg-blue-100 px-4 py-2 rounded-lg">
+                <Bed className="w-4 h-4" />
+                <span>{property.bedrooms}</span>
+              </div>
+              <div className="flex items-center gap-1 bg-blue-100 px-4 py-2 rounded-lg">
+                <Bath className="w-4 h-4" />
+                <span>{property.bathrooms}</span>
+              </div>
+            </div>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-xl font-bold text-gray-900">
+                    {property.price}
+                  </span>
+                  <span className="text-gray-900 text-xl font-bold ml-1">/Night</span>
+                </div>
+                <button className="bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                  View Details
+                </button>
+              </div>
+            </div>
           </div>
+          ))}
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <Link to="/properties">
+              <button className="bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:opacity-90">
+                Show More Properties
+              </button>
+            </Link>
+          </div>
+
         </div>
       </section>
 
@@ -311,35 +394,35 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Earn with RealEstate */}
+      {/* Earn with Rentable */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Earn with RealEstate</h2>
-            <p className="text-xl text-gray-600">Turn your property into a profitable investment</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Earn with Rentable</h2>
+            <p className="text-xl text-gray-600">List your property and start earning from day one. Join thousands of successful hosts across Nigeria.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <TrendingUp className="w-8 h-8 text-green-600" />
+                <img src={currencyImage} className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">List Your Property</h3>
-              <p className="text-gray-600">Create a listing for your property in minutes with our easy-to-use platform and professional photography tips.</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Earn More</h3>
+              <p className="text-gray-600">Higher earnings compared to traditional rentals</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Award className="w-8 h-8 text-blue-600" />
+                <img src={guestImage} className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Attract Guests</h3>
-              <p className="text-gray-600">Reach millions of travelers looking for unique places to stay and grow your business with our marketing tools.</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Quality Guests</h3>
+              <p className="text-gray-600">Verified guests with reviews and ratings.</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl">₦</span>
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <img src={businessImage} className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Start Earning</h3>
-              <p className="text-gray-600">Get paid securely and on time. Set your own prices and availability to maximize your earnings potential.</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Grow Your Business</h3>
+              <p className="text-gray-600">Analytics and tools to optimize your listings</p>
             </div>
           </div>
 
@@ -351,6 +434,7 @@ const Landing: React.FC = () => {
               Start Hosting Today →
             </Link>
           </div>
+
         </div>
       </section>
 
@@ -417,6 +501,4 @@ const Landing: React.FC = () => {
       </footer>
     </div>
   );
-};
-
-export default Landing;
+}
