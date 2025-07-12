@@ -349,13 +349,13 @@ export default function LandingPage() {
           ))}
           </div>
 
-          <div className="mt-8 flex justify-center">
+          {/* <div className="mt-8 flex justify-center">
             <Link to="/properties">
               <button className="bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white px-6 py-3 rounded-lg text-sm font-semibold transition-colors hover:opacity-90">
                 Show More Properties
               </button>
             </Link>
-          </div>
+          </div> */}
 
         </div>
       </section>

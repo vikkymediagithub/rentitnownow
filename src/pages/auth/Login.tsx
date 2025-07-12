@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import clsx from "clsx";
 
@@ -18,42 +18,74 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const response = await fetch("https://rentitnownow.com/api/v1/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const responseData = await response.json();
+      console.log("LOGIN RESPONSE:", responseData);
+
+      if (!response.ok) {
+        throw new Error(responseData?.message || "Login failed");
+      }
+
+      const user = responseData?.data?.user;
+      const token = responseData?.data?.access_token;
+
+      // if (!user || !user.role || !token) {
+        if (!user && !user.role && !token) {
+        console.error("user:", user, "token:", token);
+        throw new Error("Invalid user data returned from server.");
+      }
+      
+
+      // Save to localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+
       toast({
         title: "Welcome back!",
         description: "You have been successfully logged in.",
       });
 
-      if (email.includes("owner")) {
-        navigate("/owner-dashboard");
+      // ✅ Role-based redirection
+      if (user.role === "guest") {
+        navigate("/guest/dashboard");
+      } else if (user.role === "owner") {
+        navigate("/owner/dashboard");
       } else {
-        navigate("/guest-dashboard");
+        navigate("/owner/dashboard");
       }
-    }, 1500);
+    } 
+    catch (err: any) {
+      toast({
+        title: "Login failed",
+        description: err.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-sky-50 flex flex-col">
-      {/* Header */}
       <header className="bg-white border-b">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-             <div className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white rounded-md px-3 py-1 font-bold">
-              R
+            <div className="flex items-center space-x-2">
+              <div className="bg-gradient-to-r from-[#F85259] to-[#3352A5] text-white rounded-md px-3 py-1 font-bold">
+                R
+              </div>
+              <p className="font-semibold text-sm">Rentitnownow.com</p>
             </div>
-            <p className="font-semibold text-sm">Rentitnownow.com</p>
-          </div>
-          <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-blue-600 text-white rounded flex items-center justify-center">
-            <Search className="h-4 w-4 text-white" />
-          </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-[480px] rounded-lg bg-white shadow-md p-8">
           <div className="text-center mb-8">
@@ -74,7 +106,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full h-11 px-4 border border-r-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gradient-to-r focus:from-red-500 focus:to-blue-500 transition"
+                className="w-full h-11 px-4 border border-r-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
 
@@ -91,7 +123,7 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full h-11 px-4 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gradient-to-r focus:from-red-500 focus:to-blue-500 transition"
+                  className="w-full h-11 px-4 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
                 <div
                   className="absolute inset-y-0 right-3 flex items-center text-gray-500 cursor-pointer"
@@ -106,10 +138,7 @@ const Login = () => {
             <div className="text-right mt-2">
               <span className="text-sm text-gray-500">
                 Forgot password?{" "}
-                <Link
-                  to="/forgot-password"
-                  className="bg-gradient-to-r from-[#F85259] to-[#3352A5] bg-clip-text text-transparent font-medium"
-                >
+                <Link to="/forgot-password" className="text-blue-500 font-medium">
                   Reset here
                 </Link>
               </span>
@@ -120,8 +149,7 @@ const Login = () => {
               type="submit"
               className={clsx(
                 "w-full h-11 text-white font-medium rounded-md transition-all duration-200",
-                "bg-gradient-to-r from-red-500 to-blue-600",
-                "hover:shadow-lg hover:shadow-blue-300/40 hover:from-red-600 hover:to-blue-700"
+                "bg-gradient-to-r from-red-500 to-blue-600"
               )}
               disabled={isLoading}
             >

@@ -9,6 +9,8 @@ import {
   Eye,
   Calendar,
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import currencyImage from '../../assets/currency.png';
 import calenderImage from '../../assets/calender.png';
@@ -17,10 +19,55 @@ import roomImageOne from '../../assets/room-1.png';
 import roomImageTwo from '../../assets/room-2.png';
 
 function OwnerDashboard() {
+    const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  // ✅ Role-based redirect logic here
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem("user");
+
+      if (!storedUser) {
+        navigate("/login");
+        return;
+      }
+
+      const parsedUser = JSON.parse(storedUser);
+
+      if (!parsedUser || !parsedUser.role) {
+        navigate("/login");
+        return;
+      }
+
+      if (parsedUser.role === "guest") {
+        navigate("/guest/dashboard");
+      } else if (parsedUser.role !== "owner") {
+        navigate("/login");
+      } else {
+        setUser(parsedUser);
+      }
+    } catch (err) {
+      console.error("Invalid user data in localStorage:", err);
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  // ✅ You can optionally show a loading state while checking
+  if (!user) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-500 text-lg">Loading dashboard...</p>
+      </div>
+    );
+  }
+
   return (
     <main className="flex-1 relative overflow-y-auto focus:outline-none bg-gray-50 min-h-screen">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-bold mb-4 text-[#004c61]">
+            Welcome back, {user.first_name} 👋
+          </h1>
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
