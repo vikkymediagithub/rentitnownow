@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from './Components/Navbar'
 import { ArrowLeft } from 'lucide-react'
 import Profilecard from './Components/Profilecard'
+import ProfileSidebar from './Components/ProfileSidebar'
 
 
 
