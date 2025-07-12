@@ -28,7 +28,7 @@ import Profile from "./pages/owner/Profile";
 import OwnerLayout from "./pages/owner/OwnerLayout";
 
 // For Guest: GuestDashboard
-// import GuestDashboard from "./pages/guest/GuestDashboard";
+import GuestDashboard from "./pages/guest/GuestDashboard";
 
 const queryClient = new QueryClient();
 
@@ -48,11 +48,11 @@ const App = () => {
             <Route path="/confirm-email" element={<ConfirmEmail />} />
 
             {/* Optional Guest route */}
-            {/* <Route path="/guest-dashboard" element={<GuestDashboard />} /> */}
+            <Route path="/guest-dashboard" element={<GuestDashboard />} />
 
             {/* Owner routes nested inside OwnerLayout */}
             <Route path="/owner" element={<OwnerLayout />}>
-              <Route path="dashboard" element={<OwnerDashboard />} />
+              <Route path="/owner/owner-dashboard" element={<OwnerDashboard />} />
               <Route path="bookings" element={<AllBookings />} />
               <Route path="properties" element={<AllProperties />} />
               <Route path="add-property" element={<AddProperty />} />

@@ -57,7 +57,7 @@ const Login = () => {
       } else if (user.role === "owner") {
         navigate("/owner/dashboard");
       } else {
-        navigate("/owner/dashboard");
+        navigate("/owner/owner-dashboard");
       }
     } 
     catch (err: any) {
