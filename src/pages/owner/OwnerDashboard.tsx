@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Plus,
   Star,
@@ -9,8 +9,7 @@ import {
   Eye,
   Calendar,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import currencyImage from '../../assets/currency.png';
 import calenderImage from '../../assets/calender.png';
@@ -19,8 +18,9 @@ import roomImageOne from '../../assets/room-1.png';
 import roomImageTwo from '../../assets/room-2.png';
 
 function OwnerDashboard() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // ✅ ADDED: To handle loading state
 
   // ✅ Role-based redirect logic here
   useEffect(() => {
@@ -35,25 +35,27 @@ function OwnerDashboard() {
       const parsedUser = JSON.parse(storedUser);
 
       if (!parsedUser || !parsedUser.role) {
-        navigate("/login");
+        navigate("/owner/owner-dashboard"); // Fallback route
         return;
       }
 
-      if (parsedUser.role === "guest") {
-        navigate("/guest/dashboard");
-      } else if (parsedUser.role !== "owner") {
-        navigate("/login");
-      } else {
+      if (parsedUser.role === "owner") {
         setUser(parsedUser);
+      } else if (parsedUser.role === "guest") {
+        navigate("/guest/guest-dashboard");
+      } else {
+        navigate("/login");
       }
     } catch (err) {
       console.error("Invalid user data in localStorage:", err);
       navigate("/login");
+    } finally {
+      setIsLoading(false);
     }
   }, [navigate]);
 
-  // ✅ You can optionally show a loading state while checking
-  if (!user) {
+  // ✅ Show loading indicator only while loading
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-gray-500 text-lg">Loading dashboard...</p>
@@ -66,7 +68,7 @@ function OwnerDashboard() {
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-bold mb-4 text-[#004c61]">
-            Welcome back, {user.first_name} 👋
+            {/* Welcome back, {user.first_name} */}
           </h1>
 
           {/* Stats Cards */}
@@ -260,6 +262,5 @@ const PropertyCard = ({ id }: { id: number }) => {
     </div>
   );
 };
-
 
 export default OwnerDashboard;

@@ -15,61 +15,63 @@ const Login = () => {
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+  e.preventDefault();
+  setIsLoading(true);
 
-    try {
-      const response = await fetch("https://rentitnownow.com/api/v1/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+  try {
+    const response = await fetch("https://rentitnownow.com/api/v1/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const responseData = await response.json();
-      console.log("LOGIN RESPONSE:", responseData);
+    const responseData = await response.json();
+    console.log("LOGIN RESPONSE:", responseData);
 
-      if (!response.ok) {
-        throw new Error(responseData?.message || "Login failed");
-      }
-
-      const user = responseData?.data?.user;
-      const token = responseData?.data?.access_token;
-
-      // if (!user || !user.role || !token) {
-        if (!user && !user.role && !token) {
-        console.error("user:", user, "token:", token);
-        throw new Error("Invalid user data returned from server.");
-      }
-      
-
-      // Save to localStorage
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
-
-      toast({
-        title: "Welcome back!",
-        description: "You have been successfully logged in.",
-      });
-
-      // ✅ Role-based redirection
-      if (user.role === "guest") {
-        navigate("/guest/dashboard");
-      } else if (user.role === "owner") {
-        navigate("/owner/dashboard");
-      } else {
-        navigate("/owner/owner-dashboard");
-      }
-    } 
-    catch (err: any) {
-      toast({
-        title: "Login failed",
-        description: err.message,
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+    if (!response.ok) {
+      throw new Error(responseData?.message || "Login failed");
     }
-  };
+
+    const user = responseData?.data?.user;
+    const token = responseData?.data?.access_token;
+
+    if (!user && !user.role && !token) {
+      console.error("Invalid login response. User:", user, "Token:", token);
+      throw new Error("Invalid user data returned from server.");
+    }
+
+    // Save to localStorage
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+
+    toast({
+      title: "Welcome back!",
+      description: "You have been successfully logged in.",
+    });
+
+    // ✅ Role-based redirection using switch
+    switch (user.role) {
+      case "guest":
+        navigate("/guest/guest-dashboard");
+        break;
+      case "owner":
+        navigate("/owner/owner-dashboard");
+        break;
+      default:
+        navigate("/owner/owner-dashboard"); 
+    }
+
+  } catch (err: any) {
+    toast({
+      title: "Login failed",
+      description: err.message,
+      variant: "destructive",
+    });
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-sky-50 flex flex-col">

@@ -48,11 +48,11 @@ const App = () => {
             <Route path="/confirm-email" element={<ConfirmEmail />} />
 
             {/* Optional Guest route */}
-            <Route path="/guest-dashboard" element={<GuestDashboard />} />
+            <Route path="guest-dashboard" element={<GuestDashboard />} />
 
             {/* Owner routes nested inside OwnerLayout */}
             <Route path="/owner" element={<OwnerLayout />}>
-              <Route path="/owner/owner-dashboard" element={<OwnerDashboard />} />
+              <Route path="owner-dashboard" element={<OwnerDashboard />} />
               <Route path="bookings" element={<AllBookings />} />
               <Route path="properties" element={<AllProperties />} />
               <Route path="add-property" element={<AddProperty />} />
