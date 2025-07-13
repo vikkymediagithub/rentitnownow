@@ -38,7 +38,7 @@ const Profile: React.FC<ProfileProps> = ({ onNavigate }) => {
           {/* Header */}
           <div className="flex items-center mb-8">
             <button 
-              onClick={() => onNavigate('dashboard')}
+              onClick={() => onNavigate('owner-dashboard')}
               className="mr-4 p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100"
             >
               <ArrowLeft className="w-6 h-6" />

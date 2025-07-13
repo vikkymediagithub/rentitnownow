@@ -10,7 +10,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, currentPage, onNavigate }) => {
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: Home },
+    { id: 'owner-dashboard', label: 'Dashboard', icon: Home },
     { id: 'my-properties', label: 'My Properties', icon: Home }, // Consider changing to another icon like Building2
     { id: 'bookings', label: 'Bookings', icon: Calendar },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
