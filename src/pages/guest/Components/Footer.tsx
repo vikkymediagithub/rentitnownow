@@ -3,7 +3,7 @@ import logo from '../assets/favicon.png'; // Adjust the path if needed
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-white text-gray-700 py-10 px-6 md:px-20 border-t">
+    <footer className="bg-white text-gray-700 py-10 px-6 md:px-20 border-t mt-20">
       {/* Top Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Branding and Description */}

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Profilecard = () => {
   return (
-    <div className="flex justify-left mt-20 ml-10">
+    <div className="flex justify-left  ">
       <div className="bg-white p-8 w-80 rounded-xl shadow-md text-center">
         {/* Profile Image */}
         <img
