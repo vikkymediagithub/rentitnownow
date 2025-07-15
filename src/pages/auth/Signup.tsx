@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { toast } from "react-toastify";
@@ -99,6 +99,11 @@ function InputField({ label, placeholder, type = 'text', value, onChange, name }
 // Phone Input Field
 function PhoneInputField({ label, phone, setPhone }) {
   const [countryCode, setCountryCode] = useState('+234');
+  const [rawPhone, setRawPhone] = useState('');
+
+  useEffect(() => {
+    setPhone(`${countryCode}${rawPhone}`);
+  }, [countryCode, rawPhone, setPhone]);
 
   return (
     <div className="space-y-1">
@@ -118,14 +123,18 @@ function PhoneInputField({ label, phone, setPhone }) {
         <input
           type="tel"
           placeholder="Phone number"
-          value={phone}
-          onChange={(e) => setPhone(`${countryCode}${e.target.value}`)}
+          value={rawPhone}
+          onChange={(e) => {
+            const digits = e.target.value.replace(/\D/g, '');
+            setRawPhone(digits);
+          }}
           className="pl-28 p-2 w-full text-sm border-2 border-gray-300 rounded-lg outline-gray-400"
         />
       </div>
     </div>
   );
 }
+
 
 function GuestForm() {
   const [form, setForm] = useState({
