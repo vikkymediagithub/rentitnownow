@@ -3,7 +3,7 @@ import Navbar from './Components/Navbar'
 import { ArrowLeft } from 'lucide-react'
 import ViewPropertyHeader from './Components/ViewPropertyHeader'
 import PropertyDetails from './Components/PropertyDetails'
-import RatingsAndReviews from './Components/RatingsAndReviews'
+import RatingsAndReviews from './Components/RatingsandReviews'
 import ScheduleBookingCard from './Components/ScheduleBookingCard'
 
 const GuestViewProperty = () => {
