@@ -2,14 +2,24 @@ import React from 'react'
 
 const ViewPropertyHeader = () => {
   return (
-    <div className='rounded-md'>
-        <div className='w-[60rem] p-2 bg-white rounded-md mt-10 ml-10 h-[22rem]'>
-            <div className='flex'>
-                 <img src="src/assets/room-1.png "className=' rounded-lg p-6 w-[20rem] h-[20rem]'/>
-        <img src="src/assets/room-2.png" className='rounded-lg p-6 w-[12rem] h-[20rem]'/>
-       
-          </div>
+    <div className="mt-10 pl-10 pr-4">
+      <div className="bg-white rounded-xl shadow-md w-fit p-4">
+        <div className="flex gap-4">
+          {/* Main Image */}
+          <img
+            src="src/assets/room-1.png"
+            alt="Main Room"
+            className="rounded-2xl w-[30rem] h-48 object-cover"
+          />
+
+          {/* Secondary Image */}
+          <img
+            src="src/assets/room-2.png"
+            alt="Secondary Room"
+            className="rounded-2xl w-52 h-48 object-cover"
+          />
         </div>
+      </div>
     </div>
   )
 }

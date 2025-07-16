@@ -1,10 +1,9 @@
 import React from 'react'
 
-
 const Profilecard = () => {
   return (
-    <div className="flex justify-left  ">
-      <div className="bg-white p-8 w-80 rounded-xl shadow-md text-center">
+    <div className="flex justify-center sm:justify-start ">
+      <div className="bg-white p-8 px-32 rounded-xl shadow-md text-center">
         {/* Profile Image */}
         <img
           src="src/assets/profile.png"

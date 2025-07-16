@@ -2,6 +2,9 @@ import React from 'react'
 import Navbar from './Components/Navbar'
 import { ArrowLeft } from 'lucide-react'
 import ViewPropertyHeader from './Components/ViewPropertyHeader'
+import PropertyDetails from './Components/PropertyDetails'
+import RatingsAndReviews from './Components/RatingsandReviews'
+import ScheduleBookingCard from './Components/ScheduleBookingCard'
 
 const GuestViewProperty = () => {
   return (
@@ -14,7 +17,17 @@ const GuestViewProperty = () => {
                   <span className='text-xl font-semibold'>View Property</span>
                 </button>
               </div>
-              <ViewPropertyHeader/>
+              <div className='flex justify-between'>
+            <ViewPropertyHeader/>
+             <ScheduleBookingCard/>
+
+              </div>
+               <PropertyDetails/>
+              <RatingsAndReviews/>
+             
+             
+             
+              
    </div>
   )
 }
