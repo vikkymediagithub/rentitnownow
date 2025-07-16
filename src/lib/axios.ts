@@ -5,7 +5,20 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: false, // optional, unless backend expects cookies
 });
+
+// error handling for axios requests
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Log errors for debugging
+    console.error("Axios Error:", {
+      message: error.message,
+      response: error.response,
+      request: error.request,
+    });
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;
