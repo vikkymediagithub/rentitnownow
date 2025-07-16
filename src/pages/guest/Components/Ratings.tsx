@@ -39,7 +39,7 @@ const reviews = [
   },
 ];
 
-const RatingsandReviews: React.FC = () => {
+const Ratings = () => {
   return (
     <section className="bg-white px-6 py-10 md:px-20 mx-10  mt-10">
       {/* Ratings Section */}
@@ -107,4 +107,4 @@ const RatingsandReviews: React.FC = () => {
   );
 };
 
-export default RatingsandReviews;
+export default Ratings;
