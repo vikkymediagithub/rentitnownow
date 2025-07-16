@@ -1,10 +1,10 @@
 import React from 'react';
-import PropertyCard from './Card';
+import Card from './Card';
 
 const FavouriteProperty = () => {
   const properties = [
     {
-      id: 1,
+      id: "1",
       image: 'src/assets/room-1.png',
       title: 'Luxury Apartment in Victoria Island',
       location: 'Victoria Island, Lagos',
@@ -12,9 +12,9 @@ const FavouriteProperty = () => {
       price: 'NGN35,000/Night',
     },
     {
-      id: 2,
+      id: "2",
       image: 'src/assets/room-1.png',
-      title: 'Luxury Apartment in Victoria Island',
+      title: 'Luxury Apartment in Victoria IslandS',
       location: 'Victoria Island, Lagos',
       tags: ['Wifi', 'Pool', 'Gym'],
       price: 'NGN35,000/Night',
@@ -28,7 +28,7 @@ const FavouriteProperty = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {properties.map((property) => (
-          <PropertyCard key={property.id} property={property} />
+          <Card key={property.id} property={property} />
         ))}
       </div>
     </div>
