@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, MapPin, Star, Users, Bed, Bath, Shield, Award, TrendingUp, CheckCircle, Menu, X, ChevronDown, Filter } from 'lucide-react';
-import propertyImage from '../assets/pics.png'
+import { Search, MapPin, Star, Users, Bed, Bath, Shield, Award, TrendingUp, CheckCircle, Menu, X, ChevronDown, Filter, ArrowUp } from 'lucide-react';
+import propertyImage from '../assets/pics.png';
 import currencyImage from '../assets/currency.png';
 import guestImage from '../assets/guest.png';
-import businessImage from '../assets/business.png'; 
+import businessImage from '../assets/business.png';
+// import 'animate.css';
 
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,18 +23,25 @@ export default function LandingPage() {
     'Kaduna, Nigeria'
   ];
 
-   const filteredLocations = showAllLocations ? locations : locations.filter(loc => 
-    loc.toLowerCase().includes(selectedLocation.toLowerCase())
-  );
+// Filter locations based on user input
+  const filteredLocations = showAllLocations
+    ? locations
+    : locations.filter((location) =>
+        location.toLowerCase().includes(selectedLocation.toLowerCase())
+      );
 
-  const handleLocationSelect = (location: string) => {
+  // Handle location selection
+  const handleLocationSelect = (location) => {
     setSelectedLocation(location);
     setIsLocationDropdownOpen(false);
+    setShowAllLocations(false);
   };
 
+  // Handle "All" filter button
   const handleAllFilter = () => {
-    setShowAllLocations(!showAllLocations);
+    setShowAllLocations(true);
     setSelectedLocation('');
+    setIsLocationDropdownOpen(true);
   };
 
   const featuredProperties = [
@@ -150,7 +158,7 @@ export default function LandingPage() {
             </Link>
             <Link to="/signup">
               <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-red-500 to-blue-600 text-white font-bold transition-colors hover:opacity-90">
-                Sign In
+                Sign Up
               </button>
             </Link>
           </div>
@@ -175,7 +183,7 @@ export default function LandingPage() {
               </Link>
               <Link to="/signup">
                 <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-red-500 to-blue-600 text-white font-bold transition-colors hover:opacity-90">
-                  Sign In
+                  Sign Up
                 </button>
               </Link>
             </div>
@@ -200,47 +208,52 @@ export default function LandingPage() {
             <div className="max-w-2xl mx-auto relative">
               <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
                 <div className="p-8">
-                  
                   <div className="flex items-center space-x-4">
                     <div className="flex-1 relative">
                       <div className="relative">
                         <input
                           type="text"
                           value={selectedLocation}
-                          onChange={(e) => setSelectedLocation(e.target.value)}
+                          onChange={(e) => {
+                            setSelectedLocation(e.target.value);
+                            setIsLocationDropdownOpen(true); // Open dropdown on input change
+                            setShowAllLocations(false); // Disable "All" filter when typing
+                          }}
                           onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
                           placeholder="Where?"
                           className="w-full pl-4 pr-20 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 text-gray-900 text-lg"
                         />
-                        
+
                         {/* All button inside input */}
-                        <button 
+                        <button
                           onClick={handleAllFilter}
                           className={`absolute right-12 top-1/2 transform -translate-y-1/2 px-3 py-1 text-sm rounded-full border transition-colors flex items-center ${
-                            showAllLocations 
-                              ? 'bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-xl' 
+                            showAllLocations
+                              ? 'bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-xl'
                               : 'bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-xl'
                           }`}
                         >
                           <Filter className="w-3 h-3 mr-1" />
                           All
                         </button>
-                        
-                        <ChevronDown 
+
+                        <ChevronDown
                           className={`absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 transition-transform ${
                             isLocationDropdownOpen ? 'rotate-180' : ''
                           }`}
                         />
                       </div>
                     </div>
-                    
-                    <button className="px-8 py-4 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-xl flex items-center hover:from-red-600 hover:to-purple-700 transition-all shadow-lg text-lg font-medium">
+
+                    <button
+                      className="px-8 py-4 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-xl flex items-center hover:from-red-600 hover:to-purple-700 transition-all shadow-lg text-lg font-medium"
+                    >
                       <Search className="w-5 h-5 mr-2" />
                       Search
                     </button>
                   </div>
                 </div>
-                
+
                 {isLocationDropdownOpen && (
                   <div className="border-t border-gray-100 py-2 max-h-64 overflow-y-auto">
                     {filteredLocations.length > 0 ? (
@@ -263,6 +276,9 @@ export default function LandingPage() {
                 )}
               </div>
             </div>
+
+
+
           </div>
         </div>
       </section>
