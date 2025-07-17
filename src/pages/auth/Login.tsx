@@ -55,13 +55,12 @@ const Login = () => {
 
       switch (user.user_type) {
         case "guest":
-          navigate("/guest/guest-dashboard");
+          navigate("/owner/owner-dashboard");
           break;
         case "owner":
           navigate("/owner/owner-dashboard");
           break;
         default:
-          // console.warn(`Unknown role: ${user.user_type}`);
           throw new Error("Invalid user role.");
       }
     } catch (err: any) {

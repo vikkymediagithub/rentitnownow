@@ -32,7 +32,7 @@ const Congratulations: React.FC = () => {
                 Save for later
               </Link>
               <Link
-                to="/owner/dashboard"
+                to="/owner/owner-dashboard"
                 className="w-full sm:w-auto py-3 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-lg transition-colors font-medium text-sm text-center"
               >
                 Submit for review and publishing

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Building, Home, Building2, MapPin, Wifi, Car, Utensils, Tv, Coffee, Waves, Upload, Calendar, Clock } from 'lucide-react';
+import { ArrowLeft, Building, Home, Building2, MapPin, Wifi, Car, Utensils, Tv, Coffee, Waves, Upload, Calendar, Clock, ArrowRight } from 'lucide-react';
 
 const AddProperty: React.FC = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     title: '',
+    rentalOption: '',
     propertyType: '',
     typeOfLease: '',
     description: '',
@@ -52,20 +53,29 @@ const AddProperty: React.FC = () => {
     }));
   };
 
-  const handlePropertyTypeSelect = (type: string) => {
-    setFormData(prev => ({
+  const validateField = (e) => {
+  const { name, value } = e.target;
+  if (!value.trim()) {
+    setErrors((prev) => ({ ...prev, [name]: "This field is required" }));
+  }
+};
+
+  const handlePropertyTypeSelect = (selectedId) => {
+  setFormData((prev) => ({
+    ...prev,
+    propertyType: selectedId,
+  }));
+
+  // Clear error if a valid selection is made
+  if (selectedId) {
+    setErrors((prev) => ({
       ...prev,
-      propertyType: type
+      propertyType: '',
     }));
-    
-    // Clear error when user selects
-    if (errors.propertyType) {
-      setErrors(prev => ({
-        ...prev,
-        propertyType: ''
-      }));
-    }
-  };
+  }
+};
+
+  
 
   const handleAmenityToggle = (amenityId: string) => {
     setFormData(prev => ({
@@ -112,12 +122,19 @@ const AddProperty: React.FC = () => {
   const validateStep1 = () => {
     const newErrors: Record<string, string> = {};
     
-    if (!formData.title.trim()) {
-      newErrors.title = 'Property title is required';
+    if (!formData.rentalOption) {
+      newErrors.rentalOption = 'Please select a rental option';
     }
     
-    if (!formData.propertyType) {
-      newErrors.propertyType = 'Please select a property type';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStep2 = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.title.trim()) {
+      newErrors.title = 'Property title is required';
     }
     
     if (!formData.typeOfLease) {
@@ -132,7 +149,7 @@ const AddProperty: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const validateStep2 = () => {
+  const validateStep3 = () => {
     const newErrors: Record<string, string> = {};
     
     if (!formData.state) {
@@ -151,7 +168,7 @@ const AddProperty: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const validateStep3 = () => {
+  const validateStep4 = () => {
     const newErrors: Record<string, string> = {};
     
     if (!formData.price.trim()) {
@@ -166,7 +183,7 @@ const AddProperty: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const validateStep4 = () => {
+  const validateStep5 = () => {
     const newErrors: Record<string, string> = {};
     
     if (formData.propertyPhotos.length === 0) {
@@ -196,14 +213,16 @@ const AddProperty: React.FC = () => {
       isValid = validateStep3();
     } else if (currentStep === 4) {
       isValid = validateStep4();
+    } else if (currentStep === 5) {
+      isValid = validateStep5();
       if (isValid) {
         // Navigate to preview page with form data
-        navigate('/owner/property-preview', { state: { formData } });
+         navigate('/owner/property-preview', { state: { formData } });
         return;
       }
     }
     
-    if (isValid && currentStep < 4) {
+    if (isValid && currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -211,22 +230,24 @@ const AddProperty: React.FC = () => {
   const handlePrevious = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
-      setErrors({});
+      setErrors({}); // Clear errors when going back
     }
   };
 
   const steps = [
-    { number: 1, title: 'Basic Information', active: currentStep >= 1, completed: currentStep > 1 },
-    { number: 2, title: 'Location', active: currentStep >= 2, completed: currentStep > 2 },
-    { number: 3, title: 'Details', active: currentStep >= 3, completed: currentStep > 3 },
-    { number: 4, title: 'Photos and finish', active: currentStep >= 4, completed: currentStep > 4 }
+    { number: 1, title: 'Select Rental Option', active: currentStep >= 1, completed: currentStep > 1 },
+    { number: 2, title: 'Basic Information', active: currentStep >= 2, completed: currentStep > 2 },
+    { number: 3, title: 'Location', active: currentStep >= 3, completed: currentStep > 3 },
+    { number: 4, title: 'Details', active: currentStep >= 4, completed: currentStep > 4 },
+    { number: 5, title: 'Photos and Rules', active: currentStep >= 5, completed: currentStep > 5 }
   ];
 
-  const propertyTypes = [
-    { id: 'apartment', label: 'Apartment', icon: Building },
-    { id: 'house', label: 'House', icon: Home },
-    { id: 'condo', label: 'Condo', icon: Building2 },
-    { id: 'villa', label: 'Villa', icon: MapPin }
+  const rentalOptions = [
+    { id: 'short-let', label: 'Short-let', icon: Home },
+    { id: 'house-for-rent', label: 'House for Rent', icon: Building },
+    { id: 'vehicle', label: 'Vehicle', icon: Car },
+    { id: 'event-hall', label: 'Event Hall', icon: Building2 },
+    { id: 'others', label: 'Others', icon: MapPin }
   ];
 
   const nigerianStates = [
@@ -251,6 +272,13 @@ const AddProperty: React.FC = () => {
     return citiesMap[state] || [];
   };
 
+  const propertyTypes = [
+      { id: 'apartment', label: 'Apartment', icon: Building },
+      { id: 'house', label: 'House', icon: Home },
+      { id: 'condo', label: 'Condo', icon: Building2 },
+      { id: 'villa', label: 'Villa', icon: MapPin }
+    ];
+
   const amenities = [
     { id: 'wifi', label: 'Wi-Fi', icon: Wifi },
     { id: 'parking', label: 'Free Parking', icon: Car },
@@ -267,7 +295,7 @@ const AddProperty: React.FC = () => {
           {/* Header */}
           <div className="flex items-center mb-8">
             <Link 
-              to="/owner/owner-dashboard"
+              to="/"
               className="mr-4 p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
             >
               <ArrowLeft className="w-6 h-6" />
@@ -279,13 +307,13 @@ const AddProperty: React.FC = () => {
           </div>
 
           {/* Progress Steps with Animated Lines */}
-          <div className="mb-12 bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12">
-            <div className="flex items-center justify-between max-w-2xl mx-auto">
+          <div className="mb-12">
+            <div className="flex items-center justify-between max-w-4xl mx-auto">
               {steps.map((step, index) => (
                 <div key={step.number} className="flex items-center flex-1">
                   <div className="flex flex-col items-center">
                     <div className={`
-                      w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 z-10 relative
+                      w-12 h-12 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 z-10 relative
                       ${step.completed 
                         ? 'bg-teal-600 text-white' 
                         : step.active 
@@ -331,15 +359,57 @@ const AddProperty: React.FC = () => {
           </div>
 
           {/* Form Content */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12 min-h-[500px]">
             {currentStep === 1 && (
+              <div className="space-y-12">
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-12">What do you want to lease out?</h2>
+                  
+                  {/* Rental Options */}
+                  <div className="mb-12">
+                    <div className="flex flex-wrap gap-4 justify-center">
+                      {rentalOptions.map((option) => {
+                        const Icon = option.icon;
+                        return (
+                          <button
+                            key={option.id}
+                            type="button"
+                            onClick={() => handlePropertyTypeSelect(option.id)}
+                            className={`
+                              px-6 py-3 rounded-full border-2 text-sm font-medium transition-all duration-200 flex items-center space-x-2
+                              ${formData.rentalOption === option.id 
+                                ? 'border-teal-500 bg-teal-500 text-white' 
+                                : 'border-gray-300 bg-white text-gray-700 hover:border-teal-300 hover:bg-teal-50'
+                              }
+                            `}
+                          >
+                            <Icon className="w-4 h-4" />
+                            <span>{option.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {errors.rentalOption && (
+                      <p className="mt-4 text-sm text-red-600 text-center">{errors.rentalOption}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentStep === 2 && (
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Basic Information</h2>
-                  
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                    Short-let Basic Information
+                  </h2>
+
                   {/* Property Title */}
                   <div className="mb-6">
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="title"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Property Title <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -348,8 +418,9 @@ const AddProperty: React.FC = () => {
                       name="title"
                       value={formData.title}
                       onChange={handleInputChange}
+                      onBlur={validateField}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base transition-colors ${
-                        errors.title ? 'border-red-500' : 'border-gray-300'
+                        errors.title ? "border-red-500" : "border-gray-300"
                       }`}
                       placeholder="Give it a catchy title"
                     />
@@ -372,23 +443,28 @@ const AddProperty: React.FC = () => {
                             type="button"
                             onClick={() => handlePropertyTypeSelect(type.id)}
                             className={`
-                              p-6 border-2 rounded-lg text-center transition-all hover:border-teal-300
-                              ${formData.propertyType === type.id 
-                                ? 'border-teal-500 bg-teal-50' 
+                              p-6 border-2 rounded-lg text-center transition-all
+                              ${formData.propertyType === type.id
+                                ? "border-teal-500 bg-teal-50"
                                 : errors.propertyType
-                                  ? 'border-red-300 hover:border-red-400'
-                                  : 'border-gray-200 hover:bg-gray-50'
-                              }
+                                  ? "border-red-300 hover:border-red-400"
+                                  : "border-gray-200 hover:bg-gray-50"}
                             `}
                           >
-                            <Icon className={`
-                              w-8 h-8 mx-auto mb-3
-                              ${formData.propertyType === type.id ? 'text-teal-600' : 'text-gray-400'}
-                            `} />
-                            <p className={`
-                              text-sm font-medium
-                              ${formData.propertyType === type.id ? 'text-teal-900' : 'text-gray-700'}
-                            `}>
+                            <Icon
+                              className={`w-8 h-8 mx-auto mb-3 ${
+                                formData.propertyType === type.id
+                                  ? "text-teal-600"
+                                  : "text-gray-400"
+                              }`}
+                            />
+                            <p
+                              className={`text-sm font-medium ${
+                                formData.propertyType === type.id
+                                  ? "text-teal-900"
+                                  : "text-gray-700"
+                              }`}
+                            >
                               {type.label}
                             </p>
                           </button>
@@ -402,7 +478,10 @@ const AddProperty: React.FC = () => {
 
                   {/* Type of Lease */}
                   <div className="mb-6">
-                    <label htmlFor="typeOfLease" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="typeOfLease"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Type of lease <span className="text-red-500">*</span>
                     </label>
                     <select
@@ -410,8 +489,9 @@ const AddProperty: React.FC = () => {
                       name="typeOfLease"
                       value={formData.typeOfLease}
                       onChange={handleInputChange}
+                      onBlur={validateField}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base bg-white transition-colors ${
-                        errors.typeOfLease ? 'border-red-500' : 'border-gray-300'
+                        errors.typeOfLease ? "border-red-500" : "border-gray-300"
                       }`}
                     >
                       <option value="">Select</option>
@@ -427,7 +507,10 @@ const AddProperty: React.FC = () => {
 
                   {/* Description */}
                   <div className="mb-6">
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="description"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Description <span className="text-red-500">*</span>
                     </label>
                     <textarea
@@ -436,8 +519,9 @@ const AddProperty: React.FC = () => {
                       rows={6}
                       value={formData.description}
                       onChange={handleInputChange}
+                      onBlur={validateField}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base resize-none transition-colors ${
-                        errors.description ? 'border-red-500' : 'border-gray-300'
+                        errors.description ? "border-red-500" : "border-gray-300"
                       }`}
                       placeholder="Describe your property and what makes it special..."
                     />
@@ -449,7 +533,8 @@ const AddProperty: React.FC = () => {
               </div>
             )}
 
-            {currentStep === 2 && (
+
+            {currentStep === 3 && (
               <div className="space-y-8">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900 mb-8">Location Details</h2>
@@ -547,7 +632,7 @@ const AddProperty: React.FC = () => {
               </div>
             )}
 
-            {currentStep === 3 && (
+            {currentStep === 4 && (
               <div className="space-y-8">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900 mb-8">Property Details</h2>
@@ -672,7 +757,7 @@ const AddProperty: React.FC = () => {
               </div>
             )}
 
-            {currentStep === 4 && (
+            {currentStep === 5 && (
               <div className="space-y-8">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900 mb-8">Photos, Video & Rules</h2>
@@ -872,10 +957,10 @@ const AddProperty: React.FC = () => {
                 onClick={handlePrevious}
                 disabled={currentStep === 1}
                 className={`
-                  px-6 py-3 rounded-lg font-medium transition-colors
+                  px-8 py-3 rounded-lg font-medium transition-colors text-base
                   ${currentStep === 1 
                     ? 'text-gray-400 cursor-not-allowed' 
-                    : 'text-gray-700 hover:bg-gray-100'
+                    : 'text-gray-700 hover:bg-gray-100 border border-gray-300'
                   }
                 `}
               >
@@ -883,12 +968,10 @@ const AddProperty: React.FC = () => {
               </button>
               <button
                 onClick={handleNext}
-                className="px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-medium transition-colors flex items-center"
+                className="px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-medium transition-colors flex items-center text-base"
               >
-                {currentStep === 4 ? 'Next' : 'Next'}
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                Next
+                <ArrowRight className="w-5 h-5 ml-2" />
               </button>
             </div>
           </div>
@@ -899,3 +982,6 @@ const AddProperty: React.FC = () => {
 };
 
 export default AddProperty;
+
+
+
