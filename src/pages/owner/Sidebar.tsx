@@ -14,7 +14,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, currentPage, onNavig
     { id: 'my-properties', label: 'My Properties', icon: Home }, // Consider changing to another icon like Building2
     { id: 'bookings', label: 'Bookings', icon: Calendar },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'payments', label: 'Payments', icon: CreditCard },
+    { id: 'wallets', label: 'Wallets', icon: CreditCard },
+    { id: 'analytics', label: 'Analytics', icon: CreditCard },
+    { id: 'notifications', label: 'Notifications', icon: CreditCard },
+    { id: 'settings', label: 'Settings', icon: CreditCard },
+    { id: 'help', label: 'Help', icon: CreditCard },
   ];
 
   return (
