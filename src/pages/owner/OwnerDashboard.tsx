@@ -16,13 +16,13 @@ import calenderImage from '../../assets/calender.png';
 import rateImage from '../../assets/rate.png';
 import roomImageOne from '../../assets/room-1.png';
 import roomImageTwo from '../../assets/room-2.png';
+import 'animate.css';
 
 function OwnerDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // ✅ ADDED: To handle loading state
+  const [isLoading, setIsLoading] = useState(true);
 
-  // ✅ Role-based redirect logic here
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem("user");
@@ -35,7 +35,7 @@ function OwnerDashboard() {
       const parsedUser = JSON.parse(storedUser);
 
       if (!parsedUser || !parsedUser.role) {
-        navigate("/owner/owner-dashboard"); // Fallback route
+        navigate("/owner/owner-dashboard");
         return;
       }
 
@@ -54,7 +54,6 @@ function OwnerDashboard() {
     }
   }, [navigate]);
 
-  // ✅ Show loading indicator only while loading
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -65,7 +64,7 @@ function OwnerDashboard() {
 
   return (
     <main className="flex-1 relative overflow-y-auto focus:outline-none bg-gray-50 min-h-screen">
-      <div className="py-6">
+      <div className="py-6 animate__animated animate__fadeInUp">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-bold mb-4 text-[#004c61]">
             {/* Welcome back, {user.first_name} */}
@@ -73,9 +72,16 @@ function OwnerDashboard() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <StatCard icon={currencyImage} title="Total Properties" value="250,000" />
-            <StatCard icon={calenderImage} title="Total Bookings" value="25" />
-            <StatCard icon={rateImage} title="Average Rating" value="4.45" />
+            <div>
+              <StatCard 
+                icon={currencyImage} 
+                title="Total Properties" 
+                value="250,000" 
+                isFirst={true}
+              />
+            </div>
+            <StatCard icon={calenderImage} title="Total Bookings" value="25" isFirst={false} />
+            <StatCard icon={rateImage} title="Average Rating" value="4.45" isFirst={false} />
           </div>
 
           {/* My Properties */}
@@ -93,7 +99,7 @@ function OwnerDashboard() {
                   to="/owner/add-property"
                   className="bg-[#004c61] text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center"
                 >
-                  <Plus className="w-4 h-4 mr-2" /> Add Property
+                  <Plus className="w-4 h-4 mr-2" /> Add Rentable
                 </Link>
               </div>
             </div>
@@ -121,7 +127,6 @@ function OwnerDashboard() {
             <div className="divide-y divide-gray-100">
               {/* Booking 1 - Confirmed */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 space-y-4 sm:space-y-0">
-                {/* Left */}
                 <div>
                   <p className="text-base font-semibold text-gray-800">Adebayo O.</p>
                   <p className="text-sm text-gray-600">Luxury Apartment In VI</p>
@@ -130,7 +135,6 @@ function OwnerDashboard() {
                     <span>June 25, 2025</span>
                   </div>
                 </div>
-                {/* Right */}
                 <div className="text-right sm:text-left">
                   <p className="text-base font-bold text-gray-800">NGN35,000</p>
                   <span className="inline-block mt-1 px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
@@ -141,7 +145,6 @@ function OwnerDashboard() {
 
               {/* Booking 2 - Pending */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 space-y-4 sm:space-y-0">
-                {/* Left */}
                 <div>
                   <p className="text-base font-semibold text-gray-800">Ruth Omoowoso</p>
                   <p className="text-sm text-gray-600">Modern Shortlet in Wuse 2</p>
@@ -150,7 +153,6 @@ function OwnerDashboard() {
                     <span>July 10, 2025</span>
                   </div>
                 </div>
-                {/* Right */}
                 <div className="text-right sm:text-left">
                   <p className="text-base font-bold text-gray-800">NGN75,000</p>
                   <span className="inline-block mt-1 px-3 py-1 text-xs font-medium bg-red-300 text-red-800 rounded-full">
@@ -160,7 +162,6 @@ function OwnerDashboard() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </main>
@@ -171,21 +172,18 @@ const StatCard = ({
   icon,
   title,
   value,
-}: {
-  icon: string;
-  title: string;
-  value: string;
+  isFirst,
 }) => (
-  <div className="bg-white shadow rounded-lg border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
+  <div className={`shadow rounded-lg border border-gray-200 p-6 flex flex-col items-center justify-center text-center ${isFirst ? 'bg-gradient-to-r from-[#F85259] to-[#3352A5] animate__animated animate__fadeIn' : 'bg-white'}`}>
     <div className="w-14 h-14 mb-3 flex items-center justify-center bg-gray-100 rounded-full">
       <img src={icon} alt={`${title} Icon`} className="w-6 h-6" />
     </div>
-    <p className="text-2xl font-bold text-gray-900">{value}</p>
-    <p className="text-sm text-gray-600 mt-1">{title}</p>
+    <p className={`text-lg font-bold ${isFirst ? 'text-white' : 'text-gray-900'}`}>{value}</p>
+    <p className={`text-sm ${isFirst ? 'text-white' : 'text-gray-600'} mt-1`}>{title}</p>
   </div>
 );
 
-const PropertyCard = ({ id }: { id: number }) => {
+const PropertyCard = ({ id }) => {
   const isFirst = id === 1;
   const image = isFirst ? roomImageOne : roomImageTwo;
   const title = isFirst
@@ -197,14 +195,11 @@ const PropertyCard = ({ id }: { id: number }) => {
 
   return (
     <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border border-gray-100 rounded-lg space-y-4 sm:space-y-0 sm:space-x-4">
-      {/* Absolute Active Badge */}
       <div className="absolute top-4 right-4">
         <span className="bg-[#47c2e7] text-white px-3 py-1 rounded-full text-xs font-medium">
           Active
         </span>
       </div>
-
-      {/* Image and Details */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center space-x-0 sm:space-x-4 w-full sm:w-[40%]">
         <div>
           <img
@@ -238,8 +233,6 @@ const PropertyCard = ({ id }: { id: number }) => {
           </div>
         </div>
       </div>
-
-      {/* Stats Section */}
       <div className="flex flex-col gap-3 sm:items-end text-right sm:text-right w-full sm:w-auto pt-8 sm:pt-0">
         <div className="flex flex-row gap-6 justify-between sm:justify-end">
           <div>
