@@ -53,6 +53,7 @@ const AddProperty: React.FC = () => {
     }));
   };
 
+
   const validateField = (e) => {
   const { name, value } = e.target;
   if (!value.trim()) {
@@ -243,11 +244,11 @@ const AddProperty: React.FC = () => {
   ];
 
   const rentalOptions = [
-    { id: 'short-let', label: 'Short-let', icon: Home },
-    { id: 'house-for-rent', label: 'House for Rent', icon: Building },
-    { id: 'vehicle', label: 'Vehicle', icon: Car },
-    { id: 'event-hall', label: 'Event Hall', icon: Building2 },
-    { id: 'others', label: 'Others', icon: MapPin }
+    { id: 'property', label: 'Property', icon: Home },
+    { id: 'vehicle', label: 'Vehicle', icon: Building },
+    { id: 'event-hall', label: 'Event-Hall', icon: Car },
+    { id: 'tool-and-equipment', label: 'Tools & Equipment', icon: Building2 },
+    { id: 'electronics', label: 'Electronics', icon: MapPin }
   ];
 
   const nigerianStates = [
@@ -363,7 +364,7 @@ const AddProperty: React.FC = () => {
             {currentStep === 1 && (
               <div className="space-y-12">
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-12">What do you want to lease out?</h2>
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-12">Select Rentable</h2>
                   
                   {/* Rental Options */}
                   <div className="mb-12">
