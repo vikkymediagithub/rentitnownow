@@ -22,7 +22,7 @@ const AddProperty: React.FC = () => {
     numberOfBathrooms: 1,
     selectedAmenities: [] as string[],
     propertyPhotos: [] as File[],
-    propertyVideo: null as File | null,
+    propertyVideos: [] as File[],
     leasePeriod: 'daily',
     checkInTime: '',
     checkOutTime: '',
@@ -60,6 +60,16 @@ const AddProperty: React.FC = () => {
       duration: 500,
       easing: 'easeOutQuad',
       delay: 400
+    });
+
+    // Animate media uploads
+    anime({
+      targets: '.media-upload',
+      opacity: [0, 1],
+      scale: [0.95, 1],
+      duration: 600,
+      easing: 'easeOutQuad',
+      delay: anime.stagger(100, { start: 200 })
     });
   }, [currentStep]);
 
@@ -129,23 +139,31 @@ const AddProperty: React.FC = () => {
     }));
   };
 
-  const handleFileUpload = (files: FileList | null, type: 'photos' | 'video') => {
+  const handleFileUpload = (files: FileList | null, type: 'photos' | 'videos') => {
     if (!files) return;
     
     if (type === 'photos') {
       const newPhotos = Array.from(files).filter(file => file.type.startsWith('image/'));
+      if (newPhotos.length + formData.propertyPhotos.length > 10) {
+        setErrors(prev => ({ ...prev, propertyPhotos: 'Maximum 10 photos allowed' }));
+        return;
+      }
       setFormData(prev => ({
         ...prev,
         propertyPhotos: [...prev.propertyPhotos, ...newPhotos]
       }));
-    } else if (type === 'video' && files[0]) {
-      if (files[0].type.startsWith('video/')) {
-        setFormData(prev => ({
-          ...prev,
-          propertyVideo: files[0]
-        }));
+    } else if (type === 'videos') {
+      const newVideos = Array.from(files).filter(file => file.type.startsWith('video/'));
+      if (newVideos.length + formData.propertyVideos.length > 4) {
+        setErrors(prev => ({ ...prev, propertyVideos: 'Maximum 4 videos allowed' }));
+        return;
       }
+      setFormData(prev => ({
+        ...prev,
+        propertyVideos: [...prev.propertyVideos, ...newVideos]
+      }));
     }
+    setErrors(prev => ({ ...prev, propertyPhotos: '', propertyVideos: '' }));
   };
 
   const removePhoto = (index: number) => {
@@ -155,10 +173,10 @@ const AddProperty: React.FC = () => {
     }));
   };
 
-  const removeVideo = () => {
+  const removeVideo = (index: number) => {
     setFormData(prev => ({
       ...prev,
-      propertyVideo: null
+      propertyVideos: prev.propertyVideos.filter((_, i) => i !== index)
     }));
   };
 
@@ -259,6 +277,7 @@ const AddProperty: React.FC = () => {
     } else if (currentStep === 5) {
       isValid = validateStep5();
       if (isValid) {
+        console.log('Navigating with formData:', formData); // Debug log
         navigate('/owner/property-preview', { state: { formData } });
         return;
       }
@@ -795,12 +814,12 @@ const AddProperty: React.FC = () => {
 
           {currentStep === 5 && (
             <div className="space-y-8">
-              <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 mb-6">Photos, Video & Rules</h2>
+              <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 mb-6">Photos, Videos & Rules</h2>
               
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center">
+              <div className="media-upload border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center">
                 <Upload className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">Upload Property Photos</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-4">Drag and drop or upload high quality images</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-4">Drag and drop or upload high quality images (max 10)</p>
                 <input
                   type="file"
                   multiple
@@ -841,14 +860,15 @@ const AddProperty: React.FC = () => {
                 )}
               </div>
 
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center">
+              <div className="media-upload border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center">
                 <Upload className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">Upload Property Video</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-4">Drag and drop or upload a high quality video</p>
+                <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">Upload Property Videos</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-4">Drag and drop or upload high quality videos (max 4, MP4/WebM recommended)</p>
                 <input
                   type="file"
-                  accept="video/*"
-                  onChange={(e) => handleFileUpload(e.target.files, 'video')}
+                  multiple
+                  accept="video/mp4,video/webm"
+                  onChange={(e) => handleFileUpload(e.target.files, 'videos')}
                   className="hidden"
                   id="video-upload"
                 />
@@ -858,23 +878,29 @@ const AddProperty: React.FC = () => {
                 >
                   Browse videos
                 </label>
+                {errors.propertyVideos && (
+                  <p className="mt-2 text-sm text-red-600">{errors.propertyVideos}</p>
+                )}
                 
-                {formData.propertyVideo && (
-                  <div className="mt-4">
-                    <div className="relative inline-block">
-                      <video
-                        src={URL.createObjectURL(formData.propertyVideo)}
-                        className="w-full max-w-xs sm:max-w-md h-24 sm:h-32 object-cover rounded-lg border border-gray-200"
-                        controls
-                      />
-                      <button
-                        type="button"
-                        onClick={removeVideo}
-                        className="absolute -top-2 -right-2 w-5 h-5 sm:w-6 sm:h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 hover:scale-110"
-                      >
-                        ×
-                      </button>
-                    </div>
+                {formData.propertyVideos.length > 0 && (
+                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+                    {formData.propertyVideos.map((video, index) => (
+                      <div key={index} className="relative">
+                        <video
+                          src={URL.createObjectURL(video)}
+                          className="w-full h-20 sm:h-24 object-cover rounded-lg border border-gray-200"
+                          controls
+                          onError={(e) => console.error('Video error:', e)}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeVideo(index)}
+                          className="absolute -top-2 -right-2 w-5 h-5 sm:w-6 sm:h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 hover:scale-110"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
