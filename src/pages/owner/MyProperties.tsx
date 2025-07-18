@@ -16,9 +16,9 @@ import {
   Calendar,
 } from 'lucide-react';
 
-const MyProperties: React.FC = () => {
+const MyRentables: React.FC = () => {
   const navigate = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<number | null>(null);
   const [filter, setFilter] = useState('All');
 
   const rentables = [
@@ -42,8 +42,8 @@ const MyProperties: React.FC = () => {
       <div className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="bg-white p-4 rounded-lg shadow-md">
-            <div className="flex items-center justify-between mb-8">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="flex items-center justify-between flex-col sm:flex-row gap-4 sm:gap-0">
               <div className="flex items-center">
                 <button
                   onClick={() => navigate(-1)}
@@ -53,16 +53,22 @@ const MyProperties: React.FC = () => {
                 </button>
                 <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 animate__animated animate__fadeIn animate__delay-1s">My Rentables</h1>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-4">
                 <select
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
-                  className="border border-gray-300 rounded px-2 py-1 text-sm sm:text-base animate__animated animate__fadeIn"
+                  className="border border-gray-300 rounded px-3 py-2 text-sm sm:text-base animate__animated animate__fadeIn"
+                  style={{ 
+                    background: 'linear-gradient(to right, #F85259, #3352A5)',
+                    color: 'white',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                  }}
                 >
-                  <option value="All">All</option>
-                  <option value="Active">Active</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Inactive">Inactive</option>
+                  <option value="All" style={{ background: 'white', color: 'black' }}>All</option>
+                  <option value="Active" style={{ background: 'white', color: 'black' }}>Active</option>
+                  <option value="Pending" style={{ background: 'white', color: 'black' }}>Pending</option>
+                  <option value="Inactive" style={{ background: 'white', color: 'black' }}>Inactive</option>
                 </select>
                 <button className="bg-[#004C61] text-white px-4 py-2 rounded-lg text-sm sm:text-base hover:bg-[#003a4a] animate__animated animate__fadeIn animate__delay-2s">
                   Add Rentable
@@ -90,7 +96,7 @@ const MyProperties: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-8">
                   <div className="text-center flex-1">
                     <p className="text-sm sm:text-base text-gray-500">Total bookings</p>
                     <p className="text-sm sm:text-base font-medium">{rentable.totalBookings}</p>
@@ -101,7 +107,7 @@ const MyProperties: React.FC = () => {
                   </div>
                   <div className="text-center">
                     <button
-                      className={`px-3 py-1 rounded-full text-xs sm:text-sm mb-1 ${
+                      className={`px-3 py-1 rounded-full text-xs sm:text-sm mb-2 ${
                         rentable.status === 'Active' ? 'bg-blue-200 text-blue-800' :
                         rentable.status === 'Pending' ? 'bg-yellow-200 text-yellow-800' :
                         'bg-gray-200 text-gray-800'
@@ -113,7 +119,37 @@ const MyProperties: React.FC = () => {
                     <p className="text-sm sm:text-base font-medium">{rentable.revenue}</p>
                   </div>
                 </div>
-                {/* Three-dot removed as per new layout */}
+                {/* Three-dot dropdown */}
+                <div className="absolute top-4 right-4">
+                  <button
+                    onClick={() => setIsDropdownOpen(rentable.id === isDropdownOpen ? null : rentable.id)}
+                    className="text-gray-400 hover:text-gray-600 text-sm sm:text-base focus:outline-none"
+                  >
+                    ⋮
+                  </button>
+                  {isDropdownOpen === rentable.id && (
+                    <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-lg z-10">
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(null);
+                          // Handle View action
+                        }}
+                        className="w-full text-left px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100 flex items-center"
+                      >
+                        <Eye className="w-4 h-4 mr-2" /> View
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(null);
+                          // Handle Edit action
+                        }}
+                        className="w-full text-left px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100 flex items-center"
+                      >
+                        <Edit3 className="w-4 h-4 mr-2" /> Edit
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -123,4 +159,4 @@ const MyProperties: React.FC = () => {
   );
 };
 
-export default MyProperties;
+export default MyRentables;
