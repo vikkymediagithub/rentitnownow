@@ -24,6 +24,8 @@ import PropertyPreview from "./pages/owner/propertyPreview";
 import Congratulations from "./pages/owner/Congratulations";
 import MyProperties from "./pages/owner/MyProperties";
 import Bookings from "./pages/owner/Bookings";
+import Analytics from "./pages/owner/Analytics";
+
 import Profile from "./pages/owner/Profile";
 
 // Layout
@@ -64,6 +66,7 @@ const App = () => {
               <Route path="congratulations" element={<Congratulations />} />
               <Route path="my-properties" element={<MyProperties />} />
               <Route path="bookings" element={<Bookings />} />
+              <Route path="analytics" element={<Analytics />} />
               <Route path="profile" element={<Profile />} />
             </Route>
           </Routes>
