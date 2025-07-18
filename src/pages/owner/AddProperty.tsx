@@ -343,7 +343,7 @@ const AddProperty: React.FC = () => {
             <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </Link>
           <div>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Add Property</h1>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Add Rentable</h1>
             <p className="text-sm sm:text-base text-gray-600 mt-1">Share your space with travelers from around the world</p>
           </div>
         </div>
