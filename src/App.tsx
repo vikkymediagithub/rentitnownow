@@ -23,6 +23,7 @@ import ViewProperty from "./pages/owner/ViewProperty";
 import PropertyPreview from "./pages/owner/propertyPreview";
 import Congratulations from "./pages/owner/Congratulations";
 import MyProperties from "./pages/owner/MyProperties";
+import Bookings from "./pages/owner/Bookings";
 import Profile from "./pages/owner/Profile";
 
 // Layout
@@ -62,6 +63,7 @@ const App = () => {
               <Route path="property-preview" element={<PropertyPreview />} />
               <Route path="congratulations" element={<Congratulations />} />
               <Route path="my-properties" element={<MyProperties />} />
+              <Route path="bookings" element={<Bookings />} />
               <Route path="profile" element={<Profile />} />
             </Route>
           </Routes>
