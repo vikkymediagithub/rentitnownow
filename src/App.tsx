@@ -22,6 +22,7 @@ import EditProperty from "./pages/owner/EditProperty";
 import ViewProperty from "./pages/owner/ViewProperty";
 import PropertyPreview from "./pages/owner/propertyPreview";
 import Congratulations from "./pages/owner/Congratulations";
+import MyProperties from "./pages/owner/MyProperties";
 import Profile from "./pages/owner/Profile";
 
 // Layout
@@ -53,13 +54,14 @@ const App = () => {
             {/* Owner routes nested inside OwnerLayout */}
             <Route path="/owner" element={<OwnerLayout />}>
               <Route path="owner-dashboard" element={<OwnerDashboard />} />
-              <Route path="bookings" element={<AllBookings />} />
-              <Route path="properties" element={<AllProperties />} />
+              <Route path="all-bookings" element={<AllBookings />} />
+              <Route path="all-properties" element={<AllProperties />} />
               <Route path="add-property" element={<AddProperty />} />
               <Route path="edit-property/:id" element={<EditProperty />} />
               <Route path="view-property/:id" element={<ViewProperty />} />
               <Route path="property-preview" element={<PropertyPreview />} />
               <Route path="congratulations" element={<Congratulations />} />
+              <Route path="my-properties" element={<MyProperties />} />
               <Route path="profile" element={<Profile />} />
             </Route>
           </Routes>
