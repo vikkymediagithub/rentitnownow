@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Filter } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import roomImageOne from '../../assets/room-1.png';
 import roomImageTwo from '../../assets/room-2.png';
@@ -16,10 +16,11 @@ import {
   Calendar,
 } from 'lucide-react';
 
-const MyRentables: React.FC = () => {
+const MyProperty: React.FC = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState<number | null>(null);
   const [filter, setFilter] = useState('All');
+  const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
 
   const rentables = [
     { id: 1, name: 'Luxury Apartment in Victoria Island', location: 'Victoria Island, Lagos', price: 'NGN35,000/Night', totalBookings: 10, averageRating: 4.5, revenue: 'NGN300,000', status: 'Active', image: roomImageOne },
@@ -31,10 +32,7 @@ const MyRentables: React.FC = () => {
 
   const filteredRentables = rentables.filter(rentable => {
     if (filter === 'All') return true;
-    if (filter === 'Active') return rentable.status === 'Active';
-    if (filter === 'Pending') return rentable.status === 'Pending';
-    if (filter === 'Inactive') return rentable.status === 'Inactive';
-    return true;
+    return rentable.status === filter;
   });
 
   return (
@@ -43,7 +41,7 @@ const MyRentables: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="flex items-center justify-between flex-col sm:flex-row gap-4 sm:gap-0">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
               <div className="flex items-center">
                 <button
                   onClick={() => navigate(-1)}
@@ -54,22 +52,61 @@ const MyRentables: React.FC = () => {
                 <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 animate__animated animate__fadeIn animate__delay-1s">My Rentables</h1>
               </div>
               <div className="flex items-center space-x-4">
-                <select
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value)}
-                  className="border border-gray-300 rounded px-3 py-2 text-sm sm:text-base animate__animated animate__fadeIn"
-                  style={{ 
-                    background: 'linear-gradient(to right, #F85259, #3352A5)',
-                    color: 'white',
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  <option value="All" style={{ background: 'white', color: 'black' }}>All</option>
-                  <option value="Active" style={{ background: 'white', color: 'black' }}>Active</option>
-                  <option value="Pending" style={{ background: 'white', color: 'black' }}>Pending</option>
-                  <option value="Inactive" style={{ background: 'white', color: 'black' }}>Inactive</option>
-                </select>
+                <div className="relative">
+                  <button
+                    onClick={() => setIsFilterDropdownOpen(!isFilterDropdownOpen)}
+                    className="flex items-center bg-white border border-gray-300 rounded-lg px-4 py-2 text-sm sm:text-base focus:outline-none animate__animated animate__fadeIn"
+                  >
+                    <span
+                      className="mr-2"
+                      style={{
+                        background: 'linear-gradient(to right, #F85259, #3352A5)',
+                        WebkitBackgroundClip: 'text',
+                        backgroundClip: 'text',
+                        color: 'transparent',
+                      }}
+                    >
+                      {filter}
+                    </span>
+                    <Filter
+                      className="w-4 h-4"
+                      style={{
+                        background: 'linear-gradient(to right, #F85259, #3352A5)',
+                        WebkitBackgroundClip: 'text',
+                        backgroundClip: 'text',
+                        color: 'transparent',
+                      }}
+                    />
+                  </button>
+                  {isFilterDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-10">
+                      <button
+                        onClick={() => { setFilter('All'); setIsFilterDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100"
+                      >
+                        All
+                      </button>
+                      <button
+                        onClick={() => { setFilter('Active'); setIsFilterDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100"
+                      >
+                        Active
+                      </button>
+                      <button
+                        onClick={() => { setFilter('Pending'); setIsFilterDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100"
+                      >
+                        Pending
+                      </button>
+                      <button
+                        onClick={() => { setFilter('Inactive'); setIsFilterDropdownOpen(false); }}
+                        className="w-full text-left px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100"
+                      >
+                        Inactive
+                      </button>
+                    </div>
+                  )}
+                </div>
                 <button className="bg-[#004C61] text-white px-4 py-2 rounded-lg text-sm sm:text-base hover:bg-[#003a4a] animate__animated animate__fadeIn animate__delay-2s">
                   Add Rentable
                 </button>
@@ -79,37 +116,39 @@ const MyRentables: React.FC = () => {
           {/* Rentables List */}
           <div className="space-y-4 mt-8">
             {filteredRentables.map((rentable) => (
-              <div key={rentable.id} className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between relative animate__animated animate__zoomIn">
-                <div className="flex items-center space-x-4">
+              <div key={rentable.id} className="bg-white p-4 rounded-lg shadow-md flex flex-col sm:flex-row items-center justify-between relative animate__animated animate__zoomIn">
+                <div className="flex items-center space-x-4 mb-4 sm:mb-0">
                   <img src={rentable.image} alt="Property" className="w-20 h-20 rounded object-cover" />
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold">{rentable.name}</h3>
                     <p className="text-gray-500 font-normal text-sm sm:text-base">{rentable.location}</p>
                     <p className="text-black font-semibold text-sm sm:text-base">{rentable.price}</p>
                     <div className="flex space-x-4 mt-2">
-                      <button className="text-blue-500 hover:text-blue-700 flex items-center text-sm sm:text-base">
+                      <button className="flex items-center text-sm text-gray-700 hover:text-gray-900 px-3 py-1 border border-gray-300 rounded-lg">
                         <Eye className="w-4 h-4 mr-1" /> View
                       </button>
-                      <button className="text-green-500 hover:text-green-700 flex items-center text-sm sm:text-base">
+                      <button className="flex items-center text-sm text-gray-700 hover:text-gray-900 px-3 py-1 border border-gray-300 rounded-lg">
                         <Edit3 className="w-4 h-4 mr-1" /> Edit
                       </button>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center space-x-8">
+                <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8 w-full sm:w-auto">
                   <div className="text-center flex-1">
                     <p className="text-sm sm:text-base text-gray-500">Total bookings</p>
                     <p className="text-sm sm:text-base font-medium">{rentable.totalBookings}</p>
                   </div>
                   <div className="text-center flex-1">
                     <p className="text-sm sm:text-base text-gray-500">Average rating</p>
-                    <p className="text-sm sm:text-base font-medium">★ {rentable.averageRating}</p>
+                    <p className="text-sm sm:text-base font-medium flex items-center justify-center">
+                      <Star className="w-4 h-4 mr-1 text-yellow-500" /> {rentable.averageRating}
+                    </p>
                   </div>
                   <div className="text-center">
                     <button
                       className={`px-3 py-1 rounded-full text-xs sm:text-sm mb-2 ${
-                        rentable.status === 'Active' ? 'bg-blue-200 text-blue-800' :
-                        rentable.status === 'Pending' ? 'bg-yellow-200 text-yellow-800' :
+                        rentable.status === 'Active' ? 'bg-[#C5F2FF] text-[#3E3E3E]' :
+                        rentable.status === 'Pending' ? 'bg-[#FFD5BB] text-yellow-800' :
                         'bg-gray-200 text-gray-800'
                       }`}
                     >
@@ -123,7 +162,7 @@ const MyRentables: React.FC = () => {
                 <div className="absolute top-4 right-4">
                   <button
                     onClick={() => setIsDropdownOpen(rentable.id === isDropdownOpen ? null : rentable.id)}
-                    className="text-gray-400 hover:text-gray-600 text-sm sm:text-base focus:outline-none"
+                    className="text-gray-600 font-bold hover:text-gray-800 text-lg sm:text-xl focus:outline-none"
                   >
                     ⋮
                   </button>
@@ -159,4 +198,4 @@ const MyRentables: React.FC = () => {
   );
 };
 
-export default MyRentables;
+export default MyProperty;
