@@ -90,7 +90,7 @@ function OwnerDashboard() {
               <h3 className="text-xl font-bold text-gray-700">My properties</h3>
               <div className="flex space-x-3">
                 <Link
-                  to="/all-properties"
+                  to="/owner/all-properties"
                   className="text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center"
                 >
                   View all
