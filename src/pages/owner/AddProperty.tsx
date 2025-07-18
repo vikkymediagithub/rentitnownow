@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Building2, Home, Car, Wrench, Tv, Wifi, Utensils, Coffee, Waves, Upload, ArrowRight } from 'lucide-react';
 import anime from 'animejs';
 
-
 const AddProperty: React.FC = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
@@ -438,9 +437,17 @@ const AddProperty: React.FC = () => {
 
           {currentStep === 2 && (
             <div className="space-y-8">
-              <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 mb-6">
-                Short-let Basic Information
-              </h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 mb-6">
+                  Short-let Basic Information
+                </h2>
+                <div className="flex items-center space-x-2">
+                  <Home className="w-5 h-5 sm:w-6 sm:h-6 text-transparent bg-clip-text bg-gradient-to-r from-[#F85259] to-[#3352A5]" />
+                  <span className="text-sm sm:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#F85259] to-[#3352A5]">
+                    Short-Let
+                  </span>
+                </div>
+              </div>
 
               <div className="space-y-6">
                 <div>
@@ -533,10 +540,8 @@ const AddProperty: React.FC = () => {
                     }`}
                   >
                     <option value="">Select</option>
-                    <option value="short-term">Short-term rental</option>
-                    <option value="long-term">Long-term rental</option>
-                    <option value="vacation">Vacation rental</option>
-                    <option value="corporate">Corporate housing</option>
+                    <option value="rent">Rent</option>
+                    <option value="short-lets">Short-lets</option>
                   </select>
                   {errors.typeOfLease && (
                     <p className="mt-1 text-sm text-red-600">{errors.typeOfLease}</p>
