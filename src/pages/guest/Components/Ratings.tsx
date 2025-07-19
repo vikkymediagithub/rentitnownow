@@ -41,7 +41,7 @@ const reviews = [
 
 const Ratings = () => {
   return (
-    <section className="bg-white px-6 py-10 md:px-20 mx-10  mt-10">
+    <section className="bg-white px-6 py-10 md:px-20 mt-10">
       {/* Ratings Section */}
       <h2 className="text-xl font-semibold mb-4">Ratings</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

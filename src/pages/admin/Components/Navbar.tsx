@@ -1,56 +1,77 @@
-import React from 'react'
-import { FiBell } from 'react-icons/fi'
+import React, { useState } from 'react'
+import { FiBell, FiMenu } from 'react-icons/fi'
 import { Search } from 'lucide-react'
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
   return (
-    <div className='flex justify-between items-center py-5 border-b px-4 bg-white'>
-        {/* Left side - logo and name */}
-      <div className='flex gap-6 '>
-      <ul className='flex items-center space-x-3 font-bold'>
-        <li><img src='src/assets/favicon.png' className='w-10' alt='logo' /></li>
-        <li>Rentitnownow.com</li>
-      </ul>
-      <div className='flex gap-1 text-gary bg-gray-100 rounded-xl py-2 w-96 mt-2' >
-      <span className="material-icons-outlined text-left text-2xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-600">
-            search
-          </span>
-     <input
-      type='search'
-      className=' bg-gray-100 '
-      placeholder='Search for anything...'
-    
-      /></div>
+    <div className='relative'>
+      {/* Main Navbar */}
+      <div className='flex justify-between items-center py-4 px-4 border-b bg-white'>
+        {/* Left: Logo + Brand */}
+        <div className='flex items-center gap-3'>
+          <img src='src/assets/favicon.png' className='w-10' alt='logo' />
+          <span className='font-bold text-lg'>Rentitnownow.com</span>
+        </div>
+
+        {/* Search Bar - hidden on small screens */}
+        <div className='hidden md:flex items-center gap-2 bg-gray-100 rounded-xl px-2 py-1 w-96'>
+          <Search className='text-gray-500' size={18} />
+          <input
+            type='search'
+            className='bg-gray-100 outline-none w-full text-sm'
+            placeholder='Search for anything...'
+          />
+        </div>
+
+        {/* Right: Icons and Greeting */}
+        <div className='flex items-center gap-4'>
+          {/* Notification */}
+          <div className='rounded-full bg-gray-50 p-2'>
+            <FiBell className='text-blue-500 text-xl' />
+          </div>
+
+          {/* Avatar */}
+          <img
+            src='src/assets/profile.png'
+            className='w-10 h-10 rounded-lg'
+            alt='avatar'
+          />
+
+          {/* Greeting - hidden on mobile */}
+          <div className='hidden md:flex flex-col leading-tight'>
+            <span className='font-semibold text-sm'>Hello Osas</span>
+            <span className='text-xs text-gray-500'>Good afternoon</span>
+          </div>
+
+          {/* Hamburger Menu - shown only on mobile */}
+          <button className='md:hidden' onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <FiMenu className='text-2xl' />
+          </button>
+        </div>
       </div>
 
-      
-
-      {/* Right side - notifications, avatar, greeting */}
-      <ul className='flex items-center space-x-4'>
-        {/* Notification Icon */}
-        <li className='rounded-full bg-gray-50 p-2'>
-          <span className="material-icons-outlined text-2xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-600">
-            notifications
-          </span>
-        </li>
-
-        {/* Avatar with gradient border */}
-        <li>
-          <div className="p-[9px] rounded-full ">
-            <img
-              src='src/assets/profile.png'
-              className='w-10 h-10 rounded-lg bg-white'
-              alt='avatar'
+      {/* Dropdown Mobile Menu */}
+      {isMenuOpen && (
+        <div className='md:hidden bg-white border-t px-4 py-4 space-y-4 shadow-md absolute w-full z-50'>
+          {/* Search input */}
+          <div className='flex items-center gap-2 bg-gray-100 rounded-xl px-2 py-1'>
+            <Search className='text-gray-500' size={18} />
+            <input
+              type='search'
+              className='bg-gray-100 outline-none w-full text-sm'
+              placeholder='Search for anything...'
             />
           </div>
-        </li>
 
-        {/* Greeting Text */}
-        <li className='flex flex-col leading-tight'>
-          <span className='font-semibold text-xl'>Hello Osas</span>
-          <span className='text-sm text-gray-500'>Good afternoon</span>
-        </li>
-      </ul>
+          {/* Greeting */}
+          <div className='flex flex-col'>
+            <span className='font-semibold text-sm'>Hello Osas</span>
+            <span className='text-xs text-gray-500'>Good afternoon</span>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
