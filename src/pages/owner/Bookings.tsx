@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, ArrowLeft, BookOpen } from 'lucide-react';
 
@@ -33,6 +33,13 @@ const Bookings: React.FC = () => {
     }
   };
 
+  // Initialize lucide-react icons
+  useEffect(() => {
+    import('lucide-react').then((lucide) => {
+      lucide.createIcons();
+    });
+  }, []);
+
   return (
     <div className="bg-gray-100 p-4 min-h-screen sm:p-6 md:p-8">
       {/* First Header with Back Arrow, Bookings Title, and Icon */}
@@ -47,7 +54,17 @@ const Bookings: React.FC = () => {
             </button>
             <h1 className="text-xl sm:text-2xl font-bold">Bookings</h1>
           </div>
-          <BookOpen className="w-6 h-6 bg-gradient-to-r from-[#F85259] to-[#3352A5] text-transparent bg-clip-text" />
+          <span
+            className="inline-flex items-center justify-center w-8 h-8"
+            style={{
+              background: 'linear-gradient(to right, #F85259, #3352A5)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              color: 'transparent',
+            }}
+          >
+            <BookOpen className="w-6 h-6" />
+          </span>
         </div>
       </div>
 
@@ -83,8 +100,8 @@ const Bookings: React.FC = () => {
                   <h3 className="font-bold text-base sm:text-lg">{booking.name}</h3>
                   <p className="text-gray-600 text-sm sm:text-base">{booking.property}</p>
                   <div className="flex items-center space-x-2">
-                    <p className="text-gray-600 text-sm sm:text-base">{booking.date}</p>
                     <Calendar className="w-5 h-5 text-gray-500" />
+                    <p className="text-gray-600 text-sm sm:text-base">{booking.date}</p>
                   </div>
                 </div>
               </div>
