@@ -26,6 +26,9 @@ import MyProperties from "./pages/owner/MyProperties";
 import Bookings from "./pages/owner/Bookings";
 import Analytics from "./pages/owner/Analytics";
 import Wallets from "./pages/owner/Wallets";
+import Notifications from "./pages/owner/Notifications";
+import Settings from "./pages/owner/Settings";
+import Help from "./pages/owner/Help";
 
 import Profile from "./pages/owner/Profile";
 
@@ -69,6 +72,9 @@ const App = () => {
               <Route path="bookings" element={<Bookings />} />
               <Route path="analytics" element={<Analytics />} />
               <Route path="wallets" element={<Wallets />} />
+              <Route path="notifications" element={<Notifications />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="help" element={<Help />} />
               {/* Profile route */}
               <Route path="profile" element={<Profile />} />
             </Route>
