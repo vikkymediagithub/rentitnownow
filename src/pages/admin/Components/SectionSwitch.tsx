@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
-import { ArrowDown, ChevronDown } from 'lucide-react'
+import React from 'react'
+import { ChevronDown } from 'lucide-react'
 
-const SectionSwitch = () => {
-  // Use the generic type directly inside <>
-const [selected, setSelected] = useState<'User' | 'Properties'>('Properties')
+interface SectionSwitchProps {
+  selected: 'User' | 'Properties'
+  setSelected: (value: 'User' | 'Properties') => void
+}
 
-const [isOpen, setIsOpen] = useState<boolean>(false)
-
+const SectionSwitch: React.FC<SectionSwitchProps> = ({ selected, setSelected }) => {
+  const [isOpen, setIsOpen] = React.useState(false)
 
   const handleToggle = () => {
     setIsOpen(!isOpen)
@@ -18,19 +19,14 @@ const [isOpen, setIsOpen] = useState<boolean>(false)
   }
 
   return (
-    <div className="relative ">
-      {/* Button */}
-      <button
-        onClick={handleToggle}
-        className="flex items-center  w-full px-4 py-2  "
-      >
+    <div className="relative">
+      <button onClick={handleToggle} className="flex items-center w-full px-4 py-2">
         <span className="font-semibold text-2xl">{selected}</span>
         <ChevronDown className={`ml-2 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {/* Dropdown */}
       {isOpen && (
-        <div className="absolute left-0 top-full mt-2 P-20 bg-white border rounded-md shadow-md z-10">
+        <div className="absolute left-0 top-full mt-2 bg-white border rounded-md shadow-md z-10">
           {selected !== 'User' && (
             <div
               onClick={() => handleSelect('User')}
@@ -49,9 +45,6 @@ const [isOpen, setIsOpen] = useState<boolean>(false)
           )}
         </div>
       )}
-
-      {/* Display section */}
-      
     </div>
   )
 }

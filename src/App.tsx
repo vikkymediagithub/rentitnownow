@@ -23,6 +23,7 @@ import ViewProperty from "./pages/owner/ViewProperty";
 import PropertyPreview from "./pages/owner/propertyPreview";
 import Congratulations from "./pages/owner/Congratulations";
 import Profile from "./pages/owner/Profile";
+import UserDetails from "./pages/admin/UserDetails"
 
 // Layout
 import OwnerLayout from "./pages/owner/OwnerLayout";
@@ -59,6 +60,7 @@ const App = () => {
 
              {/* Optional Admin route */}
              <Route path="/Admin-dashboard" element={<AdminDashboard/>} />
+              <Route path="/userdetails" element={<UserDetails/>} />
            
 
             {/* Owner routes nested inside OwnerLayout */}
