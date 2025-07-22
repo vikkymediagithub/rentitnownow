@@ -161,7 +161,7 @@ function GuestForm() {
         password_confirmation: form.confirmPassword,
         location: form.location,
         nin: form.nin,
-        role: 'guest'
+        user_type: 'guest'
       };
 
       console.log("📦 Sending payload:", payload);
@@ -246,13 +246,13 @@ function OwnerForm() {
         phone: phone,
         password: form.password,
         password_confirmation: form.confirmPassword,
-        role: 'owner',
+        user_type: 'property_owner',
       };
 
       console.log("📦 Sending OWNER payload:", payload);
 
       const response = await axios.post(
-        'https://rentitnownow.com/api/v1/auth/register',
+        'http://127.0.0.1:8000/api/v1/auth/register',
         payload
       );
 
