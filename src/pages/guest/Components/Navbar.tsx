@@ -1,26 +1,48 @@
-import React from 'react'
-import { FiBell } from 'react-icons/fi'
+import React, { useEffect, useState } from 'react';
+
+type User = {
+  first_name: string;
+  last_name: string;
+  user_type: string;
+};
 
 const Navbar = () => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (err) {
+        console.error("Failed to parse user from localStorage", err);
+      }
+    }
+  }, []);
+
+  const greeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour > 12) return "Good afternoon";
+    return "Good evening";
+  };
+
   return (
     <div className='flex justify-between items-center py-7 border-b px-4 bg-white'>
-
-      {/* Left side - logo and name */}
+      {/* Left Side */}
       <ul className='flex items-center space-x-3 font-bold'>
         <li><img src='src/assets/favicon.png' className='w-10' alt='logo' /></li>
         <li>Rentitnownow.com</li>
       </ul>
 
-      {/* Right side - notifications, avatar, greeting */}
+      {/* Right Side */}
       <ul className='flex items-center space-x-4'>
-        {/* Notification Icon */}
         <li className='rounded-full bg-gray-50 p-2'>
           <span className="material-icons-outlined text-2xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-600">
             notifications
           </span>
         </li>
 
-        {/* Avatar with gradient border */}
         <li>
           <div className="p-[9px] rounded-full ">
             <img
@@ -31,14 +53,15 @@ const Navbar = () => {
           </div>
         </li>
 
-        {/* Greeting Text */}
         <li className='flex flex-col leading-tight'>
-          <span className='font-semibold text-xl'>Hello Osas</span>
-          <span className='text-sm text-gray-500'>Good afternoon</span>
+          <span className='font-semibold text-xl'>
+            Hello {user ? user.first_name : 'Guest'}
+          </span>
+          <span className='text-sm text-gray-500'>{greeting()}</span>
         </li>
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

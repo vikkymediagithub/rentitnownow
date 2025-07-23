@@ -23,10 +23,10 @@ const FavouriteProperty = () => {
   ];
 
   return (
-    <div className="bg-white w-full max-w-6xl mx-auto p-4 sm:p-6 rounded-md">
+    <div className="bg-white mx-auto rounded-md px-7 py-6 md:mr-20">
       <p className="font-semibold text-lg sm:text-xl mb-4">Favourite Property</p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {properties.map((property) => (
           <Card key={property.id} property={property} />
         ))}

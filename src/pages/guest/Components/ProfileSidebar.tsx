@@ -17,7 +17,9 @@ const menuItems = [
 
 const ProfileSidebar = () => {
   return (
-    <div className="bg-white px-24 p-6 rounded-xl shadow-md">
+ <div className="bg-white md:w-[360px]  w-[390px] px-6  py-4 rounded-xl shadow-md mx-1" >
+
+
       <ul className="space-y-4">
         {menuItems.map((item, index) => (
           <li

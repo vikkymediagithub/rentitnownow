@@ -31,7 +31,7 @@ const RecentBooking: RecentBookings[] = [
 
 const RecentBookingSection = () => {
   return (
-    <section className="bg-white rounded-xl p-6 px-2 my-12 mx-4 ml-14  ">
+    <section className="bg-white md:w-[670px] shadow-md rounded-xl p-6 px-2 my-12    ">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-semibold">Recent Bookings</h3>
         <a href="#" className="text-sm text-blue-600 hover:underline">

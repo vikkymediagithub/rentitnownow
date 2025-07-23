@@ -35,7 +35,7 @@ const activities: Activity[] = [
 const ActivitySection = () => {
   return (
     <section
-      className="bg-white px-10 py-6 sm:p-6 rounded-xl shadow-md mx-10 md: mr-2 mt-6 "
+      className="bg-white px-10 py-6 sm:p-6 rounded-xl shadow-md mx-10  mt-6 "
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
         <h3 className="text-lg sm:text-xl font-semibold">Recent Activities</h3>
@@ -44,7 +44,7 @@ const ActivitySection = () => {
         </a>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 ">
         {activities.map((activity, index) => (
           <ActivityCard key={index} activity={activity} />
         ))}

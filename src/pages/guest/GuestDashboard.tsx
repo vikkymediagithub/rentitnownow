@@ -12,11 +12,12 @@ import Footer from './Components/Footer.tsx'
 const GuestDashboard = () => {
   return (
     <div className='bg-purple-50 min-h-screen w-full '>
-      <div className=''>
-    <div><Navbar/></div>
+      <div><Navbar/></div>
+      <div className=' mx-5'>
+    
     <div><Searchcomponent/></div>
     <div><CategoriesSection/></div>
-    <div className='flex justify-between mx-10 mt-10'>
+    <div className='flex justify-between  mt-10'>
     <p className='text-black font-semibold text-3xl'>Featured Projects</p>
     <p className='text-black '>view all</p>
     </div>

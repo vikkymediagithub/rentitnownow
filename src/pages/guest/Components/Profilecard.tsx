@@ -1,8 +1,19 @@
 import React from 'react'
 
 const Profilecard = () => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}')
+
+  // Extract name and date
+  const fullName = user?.full_name || 'No Name'
+  const createdAt = user?.created_at ? new Date(user.created_at) : null
+  const joinDate = createdAt ? createdAt.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+  }) : 'N/A'
+
   return (
-    <div className="flex justify-center sm:justify-start ">
+    <div className="bg-white p-6 px-8 md:px-24 rounded-xl shadow-md w-full max-w-md text-center">
+
       <div className="bg-white p-8 px-32 rounded-xl shadow-md text-center">
         {/* Profile Image */}
         <img
@@ -12,8 +23,8 @@ const Profilecard = () => {
         />
 
         {/* Name and Info */}
-        <p className="font-semibold text-xl">Osas Fumilayo</p>
-        <p className="text-gray-500 text-sm mb-4">Member since Dec 2023</p>
+        <p className="font-semibold text-xl capitalize">{fullName}</p>
+        <p className="text-gray-500 text-sm mb-4">Member since {joinDate}</p>
 
         {/* Stats */}
         <div className="flex justify-around text-sm text-gray-700 mt-4">

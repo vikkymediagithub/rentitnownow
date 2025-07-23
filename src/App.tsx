@@ -35,6 +35,9 @@ import GuestViewProperty from "./pages/guest/GuestViewProperty";
 
 // For admin dashboard
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import PropertyDetails from "./pages/guest/Components/PropertyDetails";
+import AdminPropertyDetails from "./pages/admin/AdminPropertyDetails";
+import BookingPage from "./pages/guest/BookingPage";
 
 const queryClient = new QueryClient();
 
@@ -57,10 +60,10 @@ const App = () => {
             <Route path="/guest-dashboard" element={<GuestDashboard />} />
             <Route path="/guest-profile" element={<GuestProfile/>}/>
              <Route path="/guest-viewproperty" element={<GuestViewProperty/>}/>
+             <Route path="/guest-yourbooking" element={<BookingPage/>} />
 
-             {/* Optional Admin route */}
-             <Route path="/Admin-dashboard" element={<AdminDashboard/>} />
-              <Route path="/userdetails" element={<UserDetails/>} />
+           
+            
            
 
             {/* Owner routes nested inside OwnerLayout */}

@@ -51,7 +51,7 @@ const categories: Category[] = [
 
 const CategoriesSection: React.FC = () => {
   return (
-    <div className=" p-10 bg-white mt-20 mx-5 rounded-md shadow-md">
+    <div className=" p-10 bg-white mt-20  rounded-md shadow-md">
       <h2 className="text-xl font-semibold mb-4">Categories</h2>
       <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-4">
         {categories.map((category, index) => (

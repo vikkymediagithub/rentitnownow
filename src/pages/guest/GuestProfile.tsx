@@ -25,7 +25,7 @@ const GuestProfile = () => {
       </div>
 
       {/* Profile Info and Sidebar grouped */}
-      <div className="flex flex-wrap justify-center gap-6 px-4 sm:px-10 mt-10">
+      <div className="flex flex-wrap justify-center gap-6 px-4 sm:px-10 mt-10  ">
         {/* Left Group: Profile Card & Sidebar */}
         <div className="flex flex-col gap-6 items-center md:items-start w-full md:max-w-xs">
           <Profilecard />
@@ -33,10 +33,10 @@ const GuestProfile = () => {
         </div>
 
         {/* Right Group: Personal Info and Bookings */}
-        <div className="flex flex-col gap-6 w-full max-w-3xl">
+        <div className="flex flex-col gap-6 w-full max-w-3xl mx-auto">
           <PersonalInformationCard />
          <RecentBookingSection/>
-          <FavouriteProperty />
+         <FavouriteProperty />
         </div>
       </div>
 
